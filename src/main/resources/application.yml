@@ -1,0 +1,23 @@
+server:
+  port: 80
+mybatis:
+  type-aliases-package: com.chibiao.lms.domain  # 所有实体别名类所在包
+  mapper-locations: classpath:mapper/*.xml       # mapper映射文件
+  configuration:
+    map-underscore-to-camel-case: true
+spring:
+  mvc:
+    date-format: yyyy-MM-dd
+  thymeleaf:
+    mode: HTML5
+    cache: false
+    encoding: UTF-8
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+    driver-class-name: com.mysql.cj.jdbc.Driver             # mysql驱动包
+    url: jdbc:mysql://127.0.0.1:3306/lms?serverTimezone=GMT%2B8  # 数据库名称
+    username: root
+    password: 206976
+  redis:
+    port: 6379
+    host: 192.168.2.128

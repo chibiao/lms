@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chibiao.lms.mapper.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.chibiao.lms.domain.Department" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="dept_no" property="deptNo" jdbcType="BIGINT" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="dept_desc" property="deptDesc" jdbcType="VARCHAR" />
+  </resultMap>
+    <delete id="deleteDepartment">
+    delete from department
+    where dept_no = #{deptNo,jdbcType=BIGINT}
+    </delete>
+    <select id="queryDepartment" resultMap="BaseResultMap">
+        select dept_no,dept_name,dept_desc from department
+    </select>
+    <select id="selectByDeptNo" resultType="com.chibiao.lms.domain.Department">
+        select dept_no,dept_name,dept_desc from department
+        where dept_no=#{deptNo}
+    </select>
+    <insert id="insert" parameterType="com.chibiao.lms.domain.Department" >
+    insert into department (dept_no, dept_name,
+      dept_desc)
+    values (#{deptNo,jdbcType=BIGINT}, #{deptName,jdbcType=VARCHAR},
+      #{deptDesc,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByDeptNo" parameterType="com.chibiao.lms.domain.Department" >
+    update department
+    set dept_name = #{deptName,jdbcType=VARCHAR},
+      dept_desc = #{deptDesc,jdbcType=VARCHAR}
+    where dept_no = #{deptNo,jdbcType=BIGINT}
+  </update>
+</mapper>

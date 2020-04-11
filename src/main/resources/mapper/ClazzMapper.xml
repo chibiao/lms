@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chibiao.lms.mapper.ClazzMapper" >
+  <resultMap id="BaseResultMap" type="com.chibiao.lms.domain.Clazz" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="clazz_no" property="clazzNo" jdbcType="BIGINT" />
+    <result column="clazz_year" property="clazzYear" jdbcType="INTEGER" />
+    <result column="clazz_name" property="clazzName" jdbcType="VARCHAR" />
+    <result column="clazz_desc" property="clazzDesc" jdbcType="VARCHAR" />
+    <result column="specialty_no" property="specialty.specialtyNo" jdbcType="BIGINT" />
+    <result column="specialty_name" property="specialty.specialtyName" jdbcType="BIGINT" />
+    <result column="dept_no" property="department.deptNo" jdbcType="BIGINT" />
+    <result column="dept_name" property="department.deptName" jdbcType="BIGINT" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.chibiao.lms.domain.Clazz" >
+    insert into clazz (clazz_no, clazz_year,
+      clazz_name, clazz_desc, specialty_no,dept_no
+      )
+    values (#{clazzNo,jdbcType=BIGINT}, #{clazzYear,jdbcType=INTEGER},
+      #{clazzName,jdbcType=VARCHAR}, #{clazzDesc,jdbcType=VARCHAR}, #{specialty.specialtyNo,jdbcType=BIGINT},#{department.deptNo,jdbcType=BIGINT}
+      )
+  </insert>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select c.clazz_no, c.clazz_year, c.clazz_name, c.clazz_desc, c.specialty_no,c.dept_no,s.specialty_name,d.dept_name
+    from clazz c left join specialty s on c.specialty_no = s.specialty_no
+    left join department d on c.dept_no = d.dept_no
+  </select>
+</mapper>
