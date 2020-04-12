@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chibiao.lms.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.chibiao.lms.domain.Student" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="student_id" property="studentId" jdbcType="BIGINT" />
+    <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="student_password" property="studentPassword" jdbcType="VARCHAR" />
+    <result column="student_phone" property="studentPhone" jdbcType="VARCHAR" />
+    <result column="student_email" property="studentEmail" jdbcType="VARCHAR" />
+    <result column="student_sex" property="studentSex" jdbcType="VARCHAR" />
+    <result column="student_birthday" property="studentBirthday" jdbcType="DATE" />
+    <result column="student_age" property="studentAge" jdbcType="INTEGER" />
+    <result column="clazz_no" property="clazz.clazzNo" jdbcType="BIGINT" />
+    <result column="specialty_no" property="specialty.specialtyNo" jdbcType="BIGINT" />
+    <result column="dept_no" property="department.deptNo" jdbcType="BIGINT" />
+  </resultMap>
+    <delete id="deleteByStudentId">
+    delete from student
+    where student_id = #{studentId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.chibiao.lms.domain.Student" >
+    insert into student (student_id, student_name,
+      student_password, student_phone, student_email, 
+      student_sex, student_birthday, student_age, 
+      clazz_no, specialty_no, dept_no
+      )
+    values (#{studentId,jdbcType=BIGINT}, #{studentName,jdbcType=VARCHAR},
+      #{studentPassword,jdbcType=VARCHAR}, #{studentPhone,jdbcType=VARCHAR}, #{studentEmail,jdbcType=VARCHAR}, 
+      #{studentSex,jdbcType=VARCHAR}, #{studentBirthday,jdbcType=DATE}, #{studentAge,jdbcType=INTEGER}, 
+      #{clazz.clazzNo,jdbcType=BIGINT}, #{specialty.specialtyNo,jdbcType=BIGINT}, #{department.deptNo,jdbcType=BIGINT}
+      )
+  </insert>
+  <update id="updateByStudentId">
+    update student
+    set student_name = #{studentName,jdbcType=VARCHAR},
+      student_phone = #{studentPhone,jdbcType=VARCHAR},
+      student_email = #{studentEmail,jdbcType=VARCHAR},
+      student_sex = #{studentSex,jdbcType=VARCHAR},
+      student_birthday = #{studentBirthday,jdbcType=DATE},
+      student_age = #{studentAge,jdbcType=INTEGER},
+      clazz_no = #{clazz.clazzNo,jdbcType=BIGINT},
+      specialty_no = #{specialty.specialtyNo,jdbcType=BIGINT},
+      dept_no = #{department.deptNo,jdbcType=BIGINT}
+    where student_id = #{studentId,jdbcType=BIGINT}
+  </update>
+    <update id="resetStudentPassword">
+        update student
+        set student_password =#{initStudentPassword}
+        where student_id=#{studentId}
+    </update>
+
+    <select id="queryStudents" resultMap="BaseResultMap">
+    select student_id, student_name, student_password, student_phone, student_email,
+    student_sex, student_birthday, student_age, clazz_no, specialty_no, dept_no
+    from student
+    <where>
+        <if test="studentId!=null">
+            and student_id = #{studentId}
+        </if>
+        <if test="studentName!=null and studentName!=''">
+            and student_name = #{studentName}
+        </if>
+        <if test="studentSex!=null">
+            and student_sex = #{studentSex}
+        </if>
+        <if test="department!=null and department.deptNo!=null">
+            and dept_no = #{department.deptNo}
+        </if>
+        <if test="specialty!=null and specialty.specialtyNo!=null">
+            and specialty_no = #{specialty.specialtyNo}
+        </if>
+        <if test="clazz!=null and clazz.clazzNo!=null">
+            and clazz_no = #{clazz.clazzNo}
+        </if>
+    </where>
+    </select>
+    <select id="selectByStudentId" resultMap="BaseResultMap">
+    select student_id, student_name, student_password, student_phone, student_email,
+    student_sex, student_birthday, student_age, clazz_no, specialty_no, dept_no
+    from student
+    where student_id=#{studentId}
+    </select>
+</mapper>

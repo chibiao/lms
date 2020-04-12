@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chibiao.lms.mapper.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.chibiao.lms.domain.Teacher" >
+    <id column="teacher_no" property="teacherNo" jdbcType="BIGINT" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="teacher_password" property="teacherPassword" jdbcType="VARCHAR" />
+    <result column="teacher_email" property="teacherEmail" jdbcType="VARCHAR" />
+    <result column="teacher_phone" property="teacherPhone" jdbcType="VARCHAR" />
+    <result column="teacher_type" property="teacherType" jdbcType="TINYINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from teacher
+    where teacher_no = #{teacherNo,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.chibiao.lms.domain.Teacher" >
+    insert into teacher (teacher_name, teacher_password,
+      teacher_email, teacher_phone, teacher_type
+      )
+    values (#{teacherName,jdbcType=VARCHAR}, #{teacherPassword,jdbcType=VARCHAR},
+      #{teacherEmail,jdbcType=VARCHAR}, #{teacherPhone,jdbcType=VARCHAR}, #{teacherType,jdbcType=TINYINT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.chibiao.lms.domain.Teacher" >
+    update teacher
+    set teacher_name = #{teacherName,jdbcType=VARCHAR},
+      teacher_password = #{teacherPassword,jdbcType=VARCHAR},
+      teacher_email = #{teacherEmail,jdbcType=VARCHAR},
+      teacher_phone = #{teacherPhone,jdbcType=VARCHAR},
+      teacher_type = #{teacherType,jdbcType=TINYINT}
+    where teacher_no = #{teacherNo,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select teacher_no, teacher_name, teacher_password, teacher_email, teacher_phone, 
+    teacher_type
+    from teacher
+    where teacher_no = #{teacherNo,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select teacher_no, teacher_name, teacher_password, teacher_email, teacher_phone, 
+    teacher_type
+    from teacher
+  </select>
+    <select id="queryTeachers" resultMap="BaseResultMap">
+        select teacher_no, teacher_name, teacher_password, teacher_email, teacher_phone,
+        teacher_type
+        from teacher
+        <where>
+            <if test="teacherNo!=null">
+                and teacher_no = #{teacherNo}
+            </if>
+            <if test="teacherName!=null and teacherName!=''">
+                and teacher_name = #{teacherName}
+            </if>
+            <if test="teacherType!=null">
+                and teacher_type = #{teacherType}
+            </if>
+        </where>
+    </select>
+</mapper>
