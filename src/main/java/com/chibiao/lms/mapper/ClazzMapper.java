@@ -9,4 +9,12 @@ public interface ClazzMapper {
 
     List<Clazz> selectAll();
 
+    Clazz selectByClazzNo(Long clazzNo);
+
+    /**
+     * 根据专业编号查询班级list
+     * @param specialtyNo 专业编号
+     * @return
+     */
+    List<Clazz> selectBySpecialtyNo(Long specialtyNo);
 }

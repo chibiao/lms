@@ -27,4 +27,12 @@
     from clazz c left join specialty s on c.specialty_no = s.specialty_no
     left join department d on c.dept_no = d.dept_no
   </select>
+    <select id="selectByClazzNo" resultMap="BaseResultMap">
+        select clazz_no,clazz_year,clazz_name,clazz_desc,specialty_no,dept_no
+        from clazz where clazz_no = #{clazzNo}
+    </select>
+    <select id="selectBySpecialtyNo" resultMap="BaseResultMap">
+        select clazz_no,clazz_year,clazz_name,clazz_desc,specialty_no,dept_no
+        from clazz where specialty_no = #{specialtyNo}
+    </select>
 </mapper>

@@ -11,9 +11,8 @@ import com.chibiao.lms.mapper.SpecialtyMapper;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.PageListRes;
 import com.chibiao.lms.service.ClazzService;
-import com.chibiao.lms.service.DepartmentService;
-import com.chibiao.lms.service.SpecialtyService;
 import com.chibiao.lms.util.PageListResUtil;
+import com.chibiao.lms.util.RedisClient;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,8 @@ public class ClazzServiceImpl implements ClazzService {
     private DepartmentMapper departmentMapper;
     @Autowired
     private SpecialtyMapper specialtyMapper;
+    @Autowired
+    private RedisClient redisClient;
 
     @Override
     public PageListRes queryClazz(PageParam pageParam) {
@@ -60,5 +61,10 @@ public class ClazzServiceImpl implements ClazzService {
         // 查询院系是否存在
         int count = clazzMapper.insert(clazz);
         return count > 0;
+    }
+
+    @Override
+    public List<Clazz> clazzBySpecialtyNo(Long specialtyNo) {
+        return clazzMapper.selectBySpecialtyNo(specialtyNo);
     }
 }

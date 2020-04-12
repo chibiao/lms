@@ -4,6 +4,8 @@ import com.chibiao.lms.domain.Clazz;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.PageListRes;
 
+import java.util.List;
+
 /**
  * 请输入描述
  *
@@ -24,4 +26,11 @@ public interface ClazzService {
      * @return 是否添加成功
      */
     Boolean addClazz(Clazz clazz);
+
+    /**
+     * 根据专业编号获取班级list
+     * @param specialtyNo 专业编号
+     * @return
+     */
+    List<Clazz> clazzBySpecialtyNo(Long specialtyNo);
 }

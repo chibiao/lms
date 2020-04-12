@@ -33,5 +33,9 @@ public class IndexController {
     public String welcome(){
         return "welcome";
     }
+    @RequestMapping("/student")
+    public String student(){
+        return "student";
+    }
 
 }

@@ -10,6 +10,8 @@ import com.chibiao.lms.util.HttpResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 班级Controller
  *
@@ -39,5 +41,12 @@ public class ClazzController {
     @ResponseBody
     public PageListRes clazzList(PageParam pageParam) {
         return clazzService.queryClazz(pageParam);
+    }
+
+    @GetMapping("/clazzBySpecialtyNo/{specialtyNo}")
+    @ResponseBody
+    public HttpResult<List<Clazz>> clazzBySpecialtyNo(@PathVariable Long specialtyNo){
+        List<Clazz> result = clazzService.clazzBySpecialtyNo(specialtyNo);
+        return HttpResultUtil.buildSuccessHttpResult(result);
     }
 }

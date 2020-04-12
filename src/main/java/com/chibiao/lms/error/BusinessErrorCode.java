@@ -20,6 +20,14 @@ public enum  BusinessErrorCode implements ErrorCode{
      */
     SPECIALTY_NOT_EXIST("1100","专业不存在"),
     SPECIALTY_NOT_IN_DEPARTMENT("1101","本专业不属于该院系"),
+    /**
+     * 班级异常 1200-1299
+     */
+    CLAZZ_NOT_EXIST("1200","班级不存在"),
+    /**
+     * 学生信息异常 1300-1399
+     */
+    STUDENT_NO_EXIST("1300","学生编号已存在")
 
 
     ;

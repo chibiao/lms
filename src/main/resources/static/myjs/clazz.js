@@ -127,10 +127,10 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
             type : "GET",
             url : "/specialty/specialtyByDeptNo/"+deptNo,
             success:function (result) {
+                $("#L_specialtyNo").empty();
                 if (result.code == "0000") {
                     if (result.data.length!=0){
                         $.each(result.data,function(index,item){
-                            console.log(item);
                             $("#L_specialtyNo").append("<option value='" + item.specialtyNo + "'>" + item.specialtyName + "</option>");
                         });
                     }
