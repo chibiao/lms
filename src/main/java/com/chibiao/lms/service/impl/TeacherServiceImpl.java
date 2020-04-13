@@ -1,5 +1,6 @@
 package com.chibiao.lms.service.impl;
 
+import com.chibiao.lms.constant.StudentConst;
 import com.chibiao.lms.domain.Teacher;
 import com.chibiao.lms.mapper.TeacherMapper;
 import com.chibiao.lms.param.PageParam;
@@ -33,6 +34,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Boolean addTeacher(Teacher teacher) {
+        teacher.setTeacherPassword(StudentConst.INIT_STUDENT_PASSWORD);
         teacherMapper.insert(teacher);
         return Boolean.TRUE;
     }

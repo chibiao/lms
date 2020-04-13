@@ -14,8 +14,8 @@ import java.util.Date;
 public class DateTools {
     /**
      * 日期转换为星期工具类 周日为 0 周一为 1 ...
-     * @param datetime
-     * @return
+     * @param datetime 时间
+     * @return 周
      */
     public static Integer dateToWeek(Date datetime) {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");

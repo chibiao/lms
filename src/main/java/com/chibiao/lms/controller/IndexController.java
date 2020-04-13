@@ -37,5 +37,9 @@ public class IndexController {
     public String student(){
         return "student";
     }
+    @RequestMapping("/teacher")
+    public String teacher(){
+        return "teacher";
+    }
 
 }

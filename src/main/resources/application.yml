@@ -21,3 +21,6 @@ spring:
   redis:
     port: 6379
     host: 192.168.2.128
+logging:
+  level:
+   com.chibiao: debug #设置日志级别

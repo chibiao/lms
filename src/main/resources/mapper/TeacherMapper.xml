@@ -7,7 +7,7 @@
     <result column="teacher_password" property="teacherPassword" jdbcType="VARCHAR" />
     <result column="teacher_email" property="teacherEmail" jdbcType="VARCHAR" />
     <result column="teacher_phone" property="teacherPhone" jdbcType="VARCHAR" />
-    <result column="teacher_type" property="teacherType" jdbcType="TINYINT" />
+    <result column="teacher_type" property="teacherType" jdbcType="INTEGER" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from teacher
@@ -18,7 +18,7 @@
       teacher_email, teacher_phone, teacher_type
       )
     values (#{teacherName,jdbcType=VARCHAR}, #{teacherPassword,jdbcType=VARCHAR},
-      #{teacherEmail,jdbcType=VARCHAR}, #{teacherPhone,jdbcType=VARCHAR}, #{teacherType,jdbcType=TINYINT}
+      #{teacherEmail,jdbcType=VARCHAR}, #{teacherPhone,jdbcType=VARCHAR}, #{teacherType,jdbcType=INTEGER}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.chibiao.lms.domain.Teacher" >
@@ -27,7 +27,7 @@
       teacher_password = #{teacherPassword,jdbcType=VARCHAR},
       teacher_email = #{teacherEmail,jdbcType=VARCHAR},
       teacher_phone = #{teacherPhone,jdbcType=VARCHAR},
-      teacher_type = #{teacherType,jdbcType=TINYINT}
+      teacher_type = #{teacherType,jdbcType=INTEGER}
     where teacher_no = #{teacherNo,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

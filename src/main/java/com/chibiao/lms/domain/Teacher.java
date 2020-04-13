@@ -27,6 +27,6 @@ public class Teacher {
     /**
      * 类型 0 教师 1 辅导员
      */
-    private Byte teacherType;
+    private Integer teacherType;
 
 }
