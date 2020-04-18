@@ -1,5 +1,6 @@
 package com.chibiao.lms.controller;
 
+import com.chibiao.lms.annotation.Log;
 import com.chibiao.lms.domain.Department;
 import com.chibiao.lms.exception.BusinessException;
 import com.chibiao.lms.param.PageParam;
@@ -30,6 +31,7 @@ public class DepartmentController {
 
     @GetMapping("/departmentList")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.DepartmentController.departmentList",errorReturnHttpResult = false)
     public PageListRes departmentList(PageParam pageParam){
         PageListRes pageListRes = departmentService.queryDepartment(pageParam);
         return pageListRes;
@@ -37,6 +39,7 @@ public class DepartmentController {
 
     @PostMapping("/addDepartment")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.DepartmentController.addDepartment")
     public HttpResult<Boolean> addDepartment(Department department){
         log.info("添加院系");
         try {
@@ -53,6 +56,7 @@ public class DepartmentController {
 
     @DeleteMapping("/deleteDepartment/{deptNo}")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.DepartmentController.deleteDepartment")
     public HttpResult<Boolean> deleteDepartment(@PathVariable("deptNo") Long deptNo){
         Boolean result = departmentService.deleteDepartment(deptNo);
         return HttpResultUtil.buildSuccessHttpResult(result);
@@ -60,6 +64,7 @@ public class DepartmentController {
 
     @GetMapping("/allDepartment")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.DepartmentController.allDepartment")
     public HttpResult<List<Department>> allDepartment(){
         List<Department> result = departmentService.allDepartment();
         return HttpResultUtil.buildSuccessHttpResult(result);

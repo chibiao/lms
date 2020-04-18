@@ -3,6 +3,7 @@ package com.chibiao.lms.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import java.util.List;
 
@@ -17,6 +18,37 @@ public class JsonUtil {
         throw new UnsupportedOperationException("can't instance this class");
     }
 
+    /**
+     *  对象转json字符串,使用默认日期格式，禁用循环检测
+     *
+     * @param object   原始对象
+     * @return json字符串
+     */
+    public static String toJSONStringWithDateFormat(Object object) {
+        return toJSONStringWithDateFormat(object, false);
+    }
+
+    /**
+     *  对象转json字符串,使用默认日期格式，禁用循环检测
+     *
+     * @param object   原始对象
+     * @param  isPretty  是否格式化
+     * @return json字符串
+     */
+    public static String toJSONStringWithDateFormat(Object object, boolean isPretty){
+        if(object == null){
+            return null;
+        }
+
+        if(isPretty){
+            return JSON.toJSONStringWithDateFormat(object, "yyyy-MM-dd HH:mm:sss",
+                    SerializerFeature.DisableCircularReferenceDetect,
+                    SerializerFeature.PrettyFormat);
+        }else {
+            return JSON.toJSONStringWithDateFormat(object, "yyyy-MM-dd HH:mm:sss", SerializerFeature.DisableCircularReferenceDetect);
+        }
+
+    }
     /**
      * 对象转json字符串,日期为数字
      */

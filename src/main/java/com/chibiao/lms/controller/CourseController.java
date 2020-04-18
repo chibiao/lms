@@ -1,5 +1,6 @@
 package com.chibiao.lms.controller;
 
+import com.chibiao.lms.annotation.Log;
 import com.chibiao.lms.domain.Course;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.HttpResult;
@@ -23,12 +24,14 @@ public class CourseController {
 
     @GetMapping("/queryCourses")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.CourseController.queryCourses",errorReturnHttpResult = false)
     public PageListRes queryCourses(Course course, PageParam pageParam) {
         return courseService.queryCourses(course, pageParam);
     }
 
     @PostMapping("/addCourse")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.CourseController.addCourse")
     public HttpResult<Boolean> addCourse(Course course) {
         Boolean result = courseService.addCourse(course);
         return HttpResultUtil.buildSuccessHttpResult(result);

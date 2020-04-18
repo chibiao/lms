@@ -1,5 +1,6 @@
 package com.chibiao.lms.exception;
 
+import com.chibiao.lms.error.DefaultErrorCode;
 import com.chibiao.lms.error.ErrorCode;
 
 /**
@@ -33,6 +34,10 @@ public class BusinessException extends RuntimeException {
     public BusinessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, ErrorCode errorCode) {
         super(message, cause, enableSuppression, writableStackTrace);
         this.errorCode = errorCode;
+    }
+
+    public static BusinessException asBusinessException(DefaultErrorCode unknownError, Throwable e) {
+        return new BusinessException(e.getMessage(),unknownError);
     }
 
     public ErrorCode getErrorCode() {

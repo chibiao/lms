@@ -1,5 +1,6 @@
 package com.chibiao.lms.controller;
 
+import com.chibiao.lms.annotation.Log;
 import com.chibiao.lms.domain.Specialty;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.HttpResult;
@@ -25,12 +26,14 @@ public class SpecialtyController {
 
     @GetMapping("/specialtyList")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.SpecialtyController.specialtyList",errorReturnHttpResult = false)
     public PageListRes specialtyList(PageParam pageParam){
         return specialtyService.querySpecialty(pageParam);
     }
 
     @PostMapping("/addSpecialty")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.SpecialtyController.addSpecialty")
     public HttpResult<Boolean> addSpecialty(Specialty specialty){
         Boolean result = specialtyService.addSpecialty(specialty);
         return HttpResultUtil.buildSuccessHttpResult(result);
@@ -40,6 +43,7 @@ public class SpecialtyController {
      */
     @GetMapping("/specialtyByDeptNo/{detpNo}")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.SpecialtyController.specialtyByDeptNo")
     public HttpResult<List<Specialty>> specialtyByDeptNo(@PathVariable("detpNo") Long detpNo){
         List<Specialty> result = specialtyService.specialtyByDeptNo(detpNo);
         return HttpResultUtil.buildSuccessHttpResult(result);

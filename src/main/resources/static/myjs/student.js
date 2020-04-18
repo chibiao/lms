@@ -46,6 +46,8 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                 $("#L_clazzNo").append("<option value=''></option>");
                 $("#L_studentId").removeAttr("disabled");
                 break;
+            case 'downloadTml':
+                window.open("/student/downloadExcelTml");
         }
     });
 

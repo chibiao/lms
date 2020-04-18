@@ -1,5 +1,6 @@
 package com.chibiao.lms.controller;
 
+import com.chibiao.lms.annotation.Log;
 import com.chibiao.lms.domain.Clazz;
 import com.chibiao.lms.exception.BusinessException;
 import com.chibiao.lms.param.PageParam;
@@ -26,6 +27,7 @@ public class ClazzController {
 
     @PostMapping("/addClazz")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.ClazzController.addClazz")
     public HttpResult<Boolean> addClazz(Clazz clazz) {
         try {
             Boolean result = clazzService.addClazz(clazz);
@@ -39,13 +41,15 @@ public class ClazzController {
 
     @GetMapping("/clazzList")
     @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.ClazzController.clazzList",errorReturnHttpResult = false)
     public PageListRes clazzList(PageParam pageParam) {
         return clazzService.queryClazz(pageParam);
     }
 
     @GetMapping("/clazzBySpecialtyNo/{specialtyNo}")
     @ResponseBody
-    public HttpResult<List<Clazz>> clazzBySpecialtyNo(@PathVariable Long specialtyNo){
+    @Log(jKey = "com.chibiao.lms.controller.ClazzController.clazzBySpecialtyNo")
+    public HttpResult<List<Clazz>> clazzBySpecialtyNo(@PathVariable Long specialtyNo) {
         List<Clazz> result = clazzService.clazzBySpecialtyNo(specialtyNo);
         return HttpResultUtil.buildSuccessHttpResult(result);
     }
