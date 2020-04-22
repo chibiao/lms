@@ -21,16 +21,18 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     @Autowired
     private AdminService adminService;
+
     @GetMapping("/adminList")
     @ResponseBody
-    @Log(jKey = "com.chibiao.lms.controller.AdminController.adminList",errorReturnHttpResult = false)
-    public PageListRes adminList(PageParam pageParam){
+    @Log(jKey = "com.chibiao.lms.controller.AdminController.adminList", errorReturnHttpResult = false)
+    public PageListRes adminList(PageParam pageParam) {
         return adminService.queryAdminList(pageParam);
     }
+
     @PostMapping("/addAdmin")
     @ResponseBody
     @Log(jKey = "com.chibiao.lms.controller.AdminController.addAdmin")
-    public HttpResult<Boolean> addAdmin(Admin admin){
+    public HttpResult<Boolean> addAdmin(Admin admin) {
         Boolean result = adminService.addAdmin(admin);
         return HttpResultUtil.buildSuccessHttpResult(result);
     }

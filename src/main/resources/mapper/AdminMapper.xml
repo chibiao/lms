@@ -16,4 +16,9 @@
     select id, admin_account, admin_password
     from admin
   </select>
+    <select id="selectByAdminAccount" resultMap="BaseResultMap">
+    select id, admin_account, admin_password
+    from admin
+    where admin_account=#{adminAccount}
+    </select>
 </mapper>

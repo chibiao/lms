@@ -10,4 +10,10 @@ public interface AdminMapper {
 
     List<Admin> selectAll();
 
+    /**
+     * 根据账户查询管理员信息
+     * @param adminAccount
+     * @return
+     */
+    Admin selectByAdminAccount(String adminAccount);
 }

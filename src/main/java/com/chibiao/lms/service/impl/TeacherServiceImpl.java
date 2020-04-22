@@ -50,4 +50,9 @@ public class TeacherServiceImpl implements TeacherService {
         teacherMapper.updateByPrimaryKey(teacher);
         return Boolean.TRUE;
     }
+
+    @Override
+    public Teacher selectByTeacherNo(Long teacherNo) {
+        return teacherMapper.selectByPrimaryKey(teacherNo);
+    }
 }

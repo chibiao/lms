@@ -39,4 +39,11 @@ public interface TeacherService {
      * @return
      */
     Boolean updateTeacher(Teacher teacher);
+
+    /**
+     * 根据教师编号查询教师信息
+     * @param teacherNo
+     * @return
+     */
+    Teacher selectByTeacherNo(Long teacherNo);
 }

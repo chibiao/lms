@@ -35,4 +35,9 @@ public class AdminServiceImpl implements AdminService {
         adminMapper.insert(admin);
         return Boolean.TRUE;
     }
+
+    @Override
+    public Admin selectByAdminAccount(String adminAccount) {
+        return adminMapper.selectByAdminAccount(adminAccount);
+    }
 }

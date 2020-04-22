@@ -81,6 +81,11 @@ public class StudentServiceImpl implements StudentService {
         studentMapper.addStudentList(list);
     }
 
+    @Override
+    public Student selectByStudentId(Long studentId) {
+        return studentMapper.selectByStudentId(studentId);
+    }
+
     private void checkClazz(Student student) {
         // 查询班级是否存在
         Clazz clazz = clazzMapper.selectByClazzNo(student.getClazz().getClazzNo());

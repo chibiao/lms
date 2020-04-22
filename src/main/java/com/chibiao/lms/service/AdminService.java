@@ -24,4 +24,11 @@ public interface AdminService {
      * @return 是否添加成功
      */
     Boolean addAdmin(Admin admin);
+
+    /**
+     * 根据账户查询管理员信息
+     * @param adminAccount
+     * @return
+     */
+    Admin selectByAdminAccount(String adminAccount);
 }

@@ -55,4 +55,11 @@ public interface StudentService {
      * @param list
      */
     void addStudentList(List<StudentData> list);
+
+    /**
+     * 根据学生编号 查询学生信息
+     * @param studentId
+     * @return
+     */
+    Student selectByStudentId(Long studentId);
 }

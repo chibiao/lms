@@ -27,9 +27,13 @@ public enum  BusinessErrorCode implements ErrorCode{
     /**
      * 学生信息异常 1300-1399
      */
-    STUDENT_NO_EXIST("1300","学生编号已存在")
-
-
+    STUDENT_NO_EXIST("1300","学生编号已存在"),
+    /**
+     * 登录异常 1400-1499
+     */
+    UNKOWN_ACCOUNT("1400","未知账户"),
+    PASSWORD_FALSE("1401","密码不正确"),
+    ACCOUNT_OR_PASSWORD_FALSE("1402","用户名或密码不正确"),
     ;
     private final String code;
     private final String description;
