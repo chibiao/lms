@@ -67,4 +67,9 @@ public class ClazzServiceImpl implements ClazzService {
     public List<Clazz> clazzBySpecialtyNo(Long specialtyNo) {
         return clazzMapper.selectBySpecialtyNo(specialtyNo);
     }
+
+    @Override
+    public Clazz selectByClazzNo(Long clazzNo) {
+        return clazzMapper.selectByClazzNo(clazzNo);
+    }
 }

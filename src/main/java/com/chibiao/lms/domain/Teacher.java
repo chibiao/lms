@@ -5,6 +5,10 @@ import lombok.Data;
 @Data
 public class Teacher {
     /**
+     * 主键
+     */
+    private Long id;
+    /**
      * 教师编号
      */
     private Long teacherNo;
@@ -24,6 +28,10 @@ public class Teacher {
      * 电话
      */
     private String teacherPhone;
+    /**
+     * 教师性别
+     */
+    private Integer teacherSex;
     /**
      * 类型 0 教师 1 辅导员
      */

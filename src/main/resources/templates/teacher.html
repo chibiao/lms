@@ -64,6 +64,16 @@
         <!--添加教师的弹窗-->
         <form class="layui-form" id="addTeacher" style="display: none" method="post">
             <div class="layui-form-item">
+                <label for="L_teacherNo" class="layui-form-label">
+                    <span class="x-red">*</span>教师编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_teacherNo" name="teacherNo" lay-verify="required|number" placeholder="请输入数字" autocomplete="off" class="layui-input"></div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>教师编号唯一
+                </div>
+            </div>
+            </div>
+            <div class="layui-form-item">
                 <label for="L_teacherName" class="layui-form-label">
                     <span class="x-red">*</span>教师名称</label>
                 <div class="layui-input-inline">
@@ -80,12 +90,23 @@
                 <label for="L_teacherPhone" class="layui-form-label">
                     <span class="x-red">*</span>电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="L_teacherPhone" name="teacherPhone" placeholder="请输入邮箱" lay-verify="required|phone"  autocomplete="off" class="layui-input">
+                    <input type="text" id="L_teacherPhone" name="teacherPhone" placeholder="请输入电话" lay-verify="required|phone"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_teacherSex" class="layui-form-label">
+                    <span class="x-red">*</span>性别</label>
+                <div class="layui-input-inline">
+                    <select  id="L_teacherSex" name="teacherSex" class="select">
+                        <option value="">请选择性别</option>
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label for="L_teacherType" class="layui-form-label">
-                    <span class="x-red">*</span>电话</label>
+                    <span class="x-red">*</span>教师类型</label>
                 <div class="layui-input-inline">
                     <select  id="L_teacherType" name="teacherType" class="select">
                         <option value="">请选择教师类型</option>
@@ -100,6 +121,10 @@
             </div>
         </form>
     </body>
+    <!--性别选择按钮-->
+    <script type="text/html" id="sexSwitch">
+        <input type="checkbox" name="sex" value="1" lay-skin="switch" disabled lay-text="女|男" lay-filter="sexDemo" {{ d.teacherSex == 1 ? 'checked' : '' }}>
+    </script>
     <!--表格操作栏-->
     <script type="text/html" id="bar">
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>

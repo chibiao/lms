@@ -29,6 +29,7 @@
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-xs" lay-event="add"><i class="layui-icon"></i>添加</button>
                 <button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="downloadTml"><i class="layui-icon">&#xe601;</i>下载模版</button>
+                <button type="button" class="layui-btn" id="uploadTml"><i class="layui-icon"></i>上传文件</button>
             </div>
         </script>
         <!--内容-->
@@ -70,6 +71,42 @@
                 </div>
             </div>
         </div>
+        <!--下载模版的弹窗-->
+        <form class="layui-form layui-col-space5" style="display: none" id="downloadStudentTml">
+            <div class="layui-form-item">
+                <label for="T_deptNo" class="layui-form-label">
+                    <span class="x-red">*</span>所属院系</label>
+                <div class="layui-input-inline">
+                    <select  id="T_deptNo" name="deptNo" lay-verify="required" lay-filter="deptNoTmlSelect" class="select">
+                        <option value="">请选择院系</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="T_specialtyNo" class="layui-form-label">
+                    <span class="x-red">*</span>所属专业</label>
+                <div class="layui-input-inline">
+                    <select  id="T_specialtyNo" name="specialtyNo" lay-verify="required" lay-filter="specialtyNoTmlSelect" class="select">
+                        <option value="">请选择专业</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="T_clazzNo" class="layui-form-label">
+                    <span class="x-red">*</span>所属班级</label>
+                <div class="layui-input-inline">
+                    <select  id="T_clazzNo" name="clazzNo" class="select" lay-verify="required">
+                        <option value="">请选择班级</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline layui-show-xs-block">
+                    <label for="T_clazzNo" class="layui-form-label"></label>
+                    <button class="layui-btn layui-btn-normal layui-btn-xs" lay-filter="downloadTml" lay-submit="" id="downloadTml">下载模版</button>
+                </div>
+            </div>
+        </form>
         <!--添加学生的弹窗-->
         <form class="layui-form" id="addStudent" style="display: none" method="post" lay-filter="addStudent">
             <div class="layui-form-item">

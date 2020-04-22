@@ -29,6 +29,10 @@ public class IndexController {
     public String clazz(){
         return "clazz";
     }
+    @RequestMapping("/course")
+    public String course(){
+        return "course";
+    }
     @RequestMapping("/welcome")
     public String welcome(){
         return "welcome";
@@ -40,6 +44,10 @@ public class IndexController {
     @RequestMapping("/teacher")
     public String teacher(){
         return "teacher";
+    }
+    @RequestMapping("/admin")
+    public String admin(){
+        return "admin";
     }
 
 }

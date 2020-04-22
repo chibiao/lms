@@ -1,6 +1,7 @@
 package com.chibiao.lms.mapper;
 
 import com.chibiao.lms.domain.Student;
+import com.chibiao.lms.domain.StudentData;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -48,4 +49,10 @@ public interface StudentMapper {
      * @return
      */
     Integer resetStudentPassword(@Param("studentId") Long studentId, @Param("initStudentPassword") String initStudentPassword);
+
+    /**
+     * 批量添加学生信息
+     * @param list
+     */
+    void addStudentList(List<StudentData> list);
 }

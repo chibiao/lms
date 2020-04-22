@@ -1,7 +1,8 @@
-layui.use(['form', 'layer','jquery','table','laydate'], function () {
+layui.use(['form', 'layer','jquery','table','laydate','upload'], function () {
     var table = layui.table;
     var laydate = layui.laydate;
     $ = layui.jquery;
+    var upload = layui.upload;
     var form = layui.form,
     layer = layui.layer;
     //第一个实例
@@ -47,7 +48,12 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                 $("#L_studentId").removeAttr("disabled");
                 break;
             case 'downloadTml':
-                window.open("/student/downloadExcelTml");
+                addStudent=layer.open({
+                    type: 1,
+                    content: $("#downloadStudentTml"), //这里content是一个普通的String
+                    area: ['400px', '300px']
+                });
+                // window.open("/student/downloadExcelTml");
         }
     });
 
@@ -239,6 +245,7 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                     if (result.data.length!=0){
                         $.each(result.data,function(index,item){
                             $("#L_deptNo").append("<option value='" + item.deptNo + "'>" + item.deptName + "</option>");
+                            $("#T_deptNo").append("<option value='" + item.deptNo + "'>" + item.deptName + "</option>");
                             $("#deptNo").append("<option value='" + item.deptNo + "'>" + item.deptName + "</option>");
                         });
                     }
@@ -246,6 +253,22 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                 }
                 form.render();
             }
+        }
+    });
+
+    //监听提交
+    form.on('submit(downloadTml)', function(data) {
+        window.open("/student/downloadExcelTml?deptNo="+data.field.deptNo+"&specialtyNo="+data.field.specialtyNo+"&clazzNo="+data.field.clazzNo);
+    });
+    // 上传学生excel
+    upload.render({ //允许上传的文件后缀
+        elem: '#uploadTml'
+        ,url: '/student/uploadExcelTml' //改成您自己的上传接口
+        ,accept: 'file' //普通文件
+        ,exts: 'xlsx|xls' //只允许上传excel
+        ,done: function(res){
+            layer.msg('上传成功');
+            table.reload('student_datagrid');
         }
     });
 
@@ -366,6 +389,72 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                         if (result.data.length!=0){
                             $.each(result.data,function(index,item){
                                 $("#clazzNo").append("<option value='" + item.clazzNo + "'>" + item.clazzName + "</option>");
+                            });
+                        }
+                        form.render();
+                    }
+                },error:function(){
+                    alert("获取数据失败","error");
+                }
+            });
+        }
+    });
+
+
+    // 下载模版
+    // 监听select选择事件
+    form.on('select(deptNoTmlSelect)', function(data){
+        if (data.value == ""){
+            // 删除子元素
+            $("#T_specialtyNo").empty();
+            $("#T_clazzNo").empty();
+            $("#T_specialtyNo").append("<option value=''>请选择专业</option>");
+            $("#T_clazzNo").append("<option value=''>请选择班级</option>");
+            form.render()
+        }else {
+            var deptNo=data.value;
+            $.ajax({
+                type : "GET",
+                url : "/specialty/specialtyByDeptNo/"+deptNo,
+                success:function (result) {
+                    // 删除子元素
+                    $("#T_specialtyNo").empty();
+                    $("#T_clazzNo").empty();
+                    $("#T_specialtyNo").append("<option value=''>请选择专业</option>");
+                    $("#T_clazzNo").append("<option value=''>请选择班级</option>");
+                    if (result.code == "0000") {
+                        if (result.data.length!=0){
+                            $.each(result.data,function(index,item){
+                                $("#T_specialtyNo").append("<option value='" + item.specialtyNo + "'>" + item.specialtyName + "</option>");
+                            });
+                        }
+                        form.render();
+                    }
+                },error:function(){
+                    alert("获取数据失败","error");
+                }
+            });
+        }
+    });
+
+    // 监听专业变化
+    form.on('select(specialtyNoTmlSelect)', function(data){
+        if (data.value == ""){
+            $("#T_clazzNo").empty();
+            $("#T_clazzNo").append("<option value=''></option>");
+            form.render()
+        }else {
+            var specialtyNo=data.value;
+            $.ajax({
+                type : "GET",
+                url : "/clazz/clazzBySpecialtyNo/"+specialtyNo,
+                success:function (result) {
+                    $("#T_clazzNo").empty();
+                    $("#T_clazzNo").append("<option value=''>请选择班级</option>");
+                    if (result.code == "0000") {
+                        if (result.data.length!=0){
+                            $.each(result.data,function(index,item){
+                                $("#T_clazzNo").append("<option value='" + item.clazzNo + "'>" + item.clazzName + "</option>");
                             });
                         }
                         form.render();

@@ -33,4 +33,11 @@ public interface ClazzService {
      * @return
      */
     List<Clazz> clazzBySpecialtyNo(Long specialtyNo);
+
+    /**
+     * 根据班级编号查询班级信息
+     * @param clazzNo
+     * @return
+     */
+    Clazz selectByClazzNo(Long clazzNo);
 }

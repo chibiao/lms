@@ -15,6 +15,7 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
             , {field: 'teacherName', title: '教师名称'}
             , {field: 'teacherEmail', title: '邮箱'}
             , {field: 'teacherPhone', title: '电话'}
+            , {field: 'teacherSex', title: '性别',templet: '#sexSwitch'}
             ,{field: 'teacherType', title: '教师类型'
                 ,templet: function(d){
                     if (d.teacherType == 0){
@@ -35,7 +36,7 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                 addTeacher=layer.open({
                     type: 1,
                     content: $("#addTeacher"), //这里content是一个普通的String
-                    area: ['400px', '400px']
+                    area: ['600px', '500px']
                 });
                 break;
         }

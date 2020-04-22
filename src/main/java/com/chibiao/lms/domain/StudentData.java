@@ -1,9 +1,10 @@
 package com.chibiao.lms.domain;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import java.util.Date;
  * @author 迟彪
  */
 @Data
+@ColumnWidth(30)
 public class StudentData {
     /**
      * 学生id
@@ -36,13 +38,13 @@ public class StudentData {
     /**
      * 性别 0 男 1 女
      */
-    @ExcelProperty("性别")
-    private String studentSex;
+    @ExcelProperty("性别(0男 1女)")
+    private Integer studentSex;
     /**
      * 生日
      */
     @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat("yyyy-MM-dd")
     @ExcelProperty(value = "生日",format = "yyyy-MM-dd")
     private Date studentBirthday;
     /**
@@ -51,8 +53,6 @@ public class StudentData {
     @ExcelProperty("年龄")
     private Integer studentAge;
 
-    @ExcelProperty("班级")
-    private Clazz clazz;
     /**
      * 班级编号
      */

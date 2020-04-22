@@ -34,7 +34,7 @@ public class Student {
     /**
      * 性别 0 男 1 女
      */
-    private String studentSex;
+    private Integer studentSex;
     /**
      * 生日
      */

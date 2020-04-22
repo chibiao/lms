@@ -1,8 +1,11 @@
 package com.chibiao.lms.service;
 
 import com.chibiao.lms.domain.Student;
+import com.chibiao.lms.domain.StudentData;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.PageListRes;
+
+import java.util.List;
 
 /**
  * 学生信息管理service
@@ -46,4 +49,10 @@ public interface StudentService {
      * @return
      */
     Boolean resetStudentPassword(Long studentId);
+
+    /**
+     * 批量添加学生信息
+     * @param list
+     */
+    void addStudentList(List<StudentData> list);
 }

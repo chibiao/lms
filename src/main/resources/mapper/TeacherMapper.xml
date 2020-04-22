@@ -7,6 +7,7 @@
     <result column="teacher_password" property="teacherPassword" jdbcType="VARCHAR" />
     <result column="teacher_email" property="teacherEmail" jdbcType="VARCHAR" />
     <result column="teacher_phone" property="teacherPhone" jdbcType="VARCHAR" />
+    <result column="teacher_sex" property="teacherSex" jdbcType="INTEGER" />
     <result column="teacher_type" property="teacherType" jdbcType="INTEGER" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
@@ -14,11 +15,12 @@
     where teacher_no = #{teacherNo,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.chibiao.lms.domain.Teacher" >
-    insert into teacher (teacher_name, teacher_password,
-      teacher_email, teacher_phone, teacher_type
+    insert into teacher (teacher_no,teacher_name, teacher_password,
+      teacher_email, teacher_phone, teacher_type,teacher_sex
       )
-    values (#{teacherName,jdbcType=VARCHAR}, #{teacherPassword,jdbcType=VARCHAR},
-      #{teacherEmail,jdbcType=VARCHAR}, #{teacherPhone,jdbcType=VARCHAR}, #{teacherType,jdbcType=INTEGER}
+    values (#{teacherNo},#{teacherName,jdbcType=VARCHAR}, #{teacherPassword,jdbcType=VARCHAR},
+      #{teacherEmail,jdbcType=VARCHAR}, #{teacherPhone,jdbcType=VARCHAR}, #{teacherType,jdbcType=INTEGER},
+      #{teacherSex}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.chibiao.lms.domain.Teacher" >
@@ -32,18 +34,18 @@
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select teacher_no, teacher_name, teacher_password, teacher_email, teacher_phone, 
-    teacher_type
+    teacher_type,teacher_sex
     from teacher
     where teacher_no = #{teacherNo,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select teacher_no, teacher_name, teacher_password, teacher_email, teacher_phone, 
-    teacher_type
+    teacher_type,teacher_sex
     from teacher
   </select>
     <select id="queryTeachers" resultMap="BaseResultMap">
         select teacher_no, teacher_name, teacher_password, teacher_email, teacher_phone,
-        teacher_type
+        teacher_type,teacher_sex
         from teacher
         <where>
             <if test="teacherNo!=null">

@@ -1,10 +1,7 @@
 package com.chibiao.lms.service.impl;
 
 import com.chibiao.lms.constant.StudentConst;
-import com.chibiao.lms.domain.Clazz;
-import com.chibiao.lms.domain.Department;
-import com.chibiao.lms.domain.Specialty;
-import com.chibiao.lms.domain.Student;
+import com.chibiao.lms.domain.*;
 import com.chibiao.lms.error.BusinessErrorCode;
 import com.chibiao.lms.exception.BusinessException;
 import com.chibiao.lms.mapper.ClazzMapper;
@@ -77,6 +74,11 @@ public class StudentServiceImpl implements StudentService {
     public Boolean resetStudentPassword(Long studentId) {
         studentMapper.resetStudentPassword(studentId,StudentConst.INIT_STUDENT_PASSWORD);
         return Boolean.TRUE;
+    }
+
+    @Override
+    public void addStudentList(List<StudentData> list) {
+        studentMapper.addStudentList(list);
     }
 
     private void checkClazz(Student student) {

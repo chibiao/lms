@@ -22,10 +22,10 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping("/queryCourses")
+    @GetMapping("/courseList")
     @ResponseBody
-    @Log(jKey = "com.chibiao.lms.controller.CourseController.queryCourses",errorReturnHttpResult = false)
-    public PageListRes queryCourses(Course course, PageParam pageParam) {
+    @Log(jKey = "com.chibiao.lms.controller.CourseController.courseList",errorReturnHttpResult = false)
+    public PageListRes courseList(Course course, PageParam pageParam) {
         return courseService.queryCourses(course, pageParam);
     }
 
