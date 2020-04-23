@@ -8,6 +8,7 @@ import com.chibiao.lms.domain.Student;
 import com.chibiao.lms.domain.StudentData;
 import com.chibiao.lms.exception.BusinessException;
 import com.chibiao.lms.listener.UploadStudentDataListener;
+import com.chibiao.lms.param.EmailParam;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.HttpResult;
 import com.chibiao.lms.result.PageListRes;
@@ -135,6 +136,14 @@ public class StudentController {
     public HttpResult<Boolean> uploadExcelTml(MultipartFile file) throws IOException {
         EasyExcel.read(file.getInputStream(), StudentData.class, new UploadStudentDataListener(studentService)).sheet().doRead();
         return HttpResultUtil.buildSuccessHttpResult(Boolean.TRUE);
+    }
+
+    @PostMapping
+    @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.StudentController.sendReminderMail")
+    public HttpResult<Boolean> sendReminderMail(Long leaveRecordId){
+        Boolean result = studentService.sendReminderMail(leaveRecordId);
+        return HttpResultUtil.buildSuccessHttpResult(result);
     }
 
     private List studentTemplateData(Long deptNo, Long specialtyNo, Long clazzNo) throws ParseException {

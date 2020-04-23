@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chibiao.lms.mapper.LeaveRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.chibiao.lms.domain.LeaveRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="student_id" property="studentId" jdbcType="BIGINT" />
+    <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="leave_reason" property="leaveReason" jdbcType="VARCHAR" />
+    <result column="leave_begin_time" property="leaveBeginTime" jdbcType="TIMESTAMP" />
+    <result column="leave_end_time" property="leaveEndTime" jdbcType="TIMESTAMP" />
+    <result column="leave_days" property="leaveDays" jdbcType="DOUBLE" />
+    <result column="specialty_no" property="specialtyNo" jdbcType="BIGINT" />
+    <result column="dept_no" property="deptNo" jdbcType="BIGINT" />
+    <result column="clazz_no" property="clazzNo" jdbcType="BIGINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from leave_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.chibiao.lms.domain.LeaveRecord" >
+    insert into leave_record (id, student_id, student_name, 
+      leave_reason, leave_begin_time, leave_end_time, 
+      leave_days, specialty_no, dept_no, 
+      clazz_no)
+    values (#{id,jdbcType=BIGINT}, #{studentId,jdbcType=BIGINT}, #{studentName,jdbcType=VARCHAR}, 
+      #{leaveReason,jdbcType=VARCHAR}, #{leaveBeginTime,jdbcType=TIMESTAMP}, #{leaveEndTime,jdbcType=TIMESTAMP}, 
+      #{leaveDays,jdbcType=DOUBLE}, #{specialtyNo,jdbcType=BIGINT}, #{deptNo,jdbcType=BIGINT}, 
+      #{clazzNo,jdbcType=BIGINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.chibiao.lms.domain.LeaveRecord" >
+    update leave_record
+    set student_id = #{studentId,jdbcType=BIGINT},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      leave_reason = #{leaveReason,jdbcType=VARCHAR},
+      leave_begin_time = #{leaveBeginTime,jdbcType=TIMESTAMP},
+      leave_end_time = #{leaveEndTime,jdbcType=TIMESTAMP},
+      leave_days = #{leaveDays,jdbcType=DOUBLE},
+      specialty_no = #{specialtyNo,jdbcType=BIGINT},
+      dept_no = #{deptNo,jdbcType=BIGINT},
+      clazz_no = #{clazzNo,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, student_id, student_name, leave_reason, leave_begin_time, leave_end_time, 
+    leave_days, specialty_no, dept_no, clazz_no
+    from leave_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, student_id, student_name, leave_reason, leave_begin_time, leave_end_time, 
+    leave_days, specialty_no, dept_no, clazz_no
+    from leave_record
+  </select>
+</mapper>

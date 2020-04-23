@@ -34,6 +34,17 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  mail: #邮件发送相关配置
+    host: smtp.qq.com
+    username: 1992999264@qq.com
+    password: emfogzprihkjciib
+    properties:
+      smtp:
+        ssl:
+          enable: true
+  activiti:
+    historyLevel: audit
+    db-history-used: true #开启历史记录表
   redis:
     port: 6379
     host: 192.168.2.128

@@ -8,13 +8,17 @@ import com.chibiao.lms.mapper.ClazzMapper;
 import com.chibiao.lms.mapper.DepartmentMapper;
 import com.chibiao.lms.mapper.SpecialtyMapper;
 import com.chibiao.lms.mapper.StudentMapper;
+import com.chibiao.lms.param.EmailParam;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.PageListRes;
 import com.chibiao.lms.service.StudentService;
+import com.chibiao.lms.template.SendEmailTemplate;
 import com.chibiao.lms.util.PageListResUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +39,8 @@ public class StudentServiceImpl implements StudentService {
     private ClazzMapper clazzMapper;
     @Autowired
     private DepartmentMapper departmentMapper;
+    @Autowired
+    private JavaMailSenderImpl javaMailSender;
 
     @Override
     public PageListRes queryStudents(Student student, PageParam pageParam) {
@@ -84,6 +90,25 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student selectByStudentId(Long studentId) {
         return studentMapper.selectByStudentId(studentId);
+    }
+
+    @Override
+    public Boolean sendReminderMail(Long leaveRecordId) {
+        //1. 查询出请假信息
+        //2. 查询出办理人
+        //3. 发送邮件
+        EmailParam emailParam = new EmailParam();
+        String sentText = SendEmailTemplate.reminderMail(emailParam);
+        SimpleMailMessage message = new SimpleMailMessage();
+        //标题
+        message.setSubject("请假申请催办");
+        message.setText(sentText);
+        //发件人
+        message.setFrom("1992999264@qq.com");
+        //收件人 办理人邮箱
+        message.setTo("");
+        javaMailSender.send(message);
+        return null;
     }
 
     private void checkClazz(Student student) {

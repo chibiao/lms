@@ -98,7 +98,7 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="admin"></table>
+		<table tableName="leave_record"></table>
 
 	</context>
 </generatorConfiguration>

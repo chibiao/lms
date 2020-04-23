@@ -2,6 +2,7 @@ package com.chibiao.lms.service;
 
 import com.chibiao.lms.domain.Student;
 import com.chibiao.lms.domain.StudentData;
+import com.chibiao.lms.param.EmailParam;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.PageListRes;
 
@@ -62,4 +63,11 @@ public interface StudentService {
      * @return
      */
     Student selectByStudentId(Long studentId);
+
+    /**
+     * 发送请假催办邮件
+     * @param leaveRecordId 请假信息id
+     * @return
+     */
+    Boolean sendReminderMail(Long leaveRecordId);
 }
