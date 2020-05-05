@@ -72,7 +72,6 @@
                     <span class="x-red">*</span>教师编号唯一
                 </div>
             </div>
-            </div>
             <div class="layui-form-item">
                 <label for="L_teacherName" class="layui-form-label">
                     <span class="x-red">*</span>教师名称</label>
@@ -116,7 +115,17 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label for="L_teacherType" class="layui-form-label"></label>
+                <div class="layui-inline">
+                    <label for="L_deptNo" class="layui-form-label">
+                        <span class="x-red">*</span>所属院系</label>
+                    <div class="layui-input-inline">
+                        <select  id="L_deptNo" name="department.deptNo" lay-verify="required" lay-search="" lay-filter="deptNoSelect" class="select">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_deptNo" class="layui-form-label"></label>
                 <button class="layui-btn" lay-filter="add" lay-submit="">增加</button>
             </div>
         </form>

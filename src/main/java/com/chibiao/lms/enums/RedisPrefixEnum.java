@@ -10,4 +10,5 @@ public enum RedisPrefixEnum {
     ;
     public static final String departmentPrefix = "department:";
     public static final String specialtyPrefix = "specialty:";
+    public static final String clazzPrefix = "clazz:";
 }

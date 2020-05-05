@@ -25,6 +25,11 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                     }
                 }
             }
+            , {field: 'department.deptName', title: '所属院系'
+                ,templet: function(d){
+                    return d.department.deptName;
+                }
+            }
         ]]
 
     });
@@ -111,6 +116,27 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
             }
         });
         return false;
+    });
+
+    // 渲染院系下拉框数据
+    $.ajax({
+        data:{},
+        type:"get",
+        url:"/department/allDepartment",
+        dataType:"json",
+        success:function (result) {
+            if (result.code == "0000") {
+                if (result.data.length!=0){
+                    if (result.data.length!=0){
+                        $.each(result.data,function(index,item){
+                            $("#L_deptNo").append("<option value='" + item.deptNo + "'>" + item.deptName + "</option>");
+                        });
+                    }
+                    form.render();
+                }
+                form.render();
+            }
+        }
     });
 
     // 校验规则

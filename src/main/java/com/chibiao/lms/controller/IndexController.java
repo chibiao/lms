@@ -49,5 +49,9 @@ public class IndexController {
     public String admin(){
         return "admin";
     }
+    @RequestMapping("/myCourse")
+    public String myCourse(){
+        return "myCourse";
+    }
 
 }

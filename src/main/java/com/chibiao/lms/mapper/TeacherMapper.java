@@ -1,6 +1,8 @@
 package com.chibiao.lms.mapper;
 
 import com.chibiao.lms.domain.Teacher;
+import com.chibiao.lms.domain.TeacherCourseRel;
+
 import java.util.List;
 
 public interface TeacherMapper {
@@ -20,4 +22,11 @@ public interface TeacherMapper {
      * @return
      */
     List<Teacher> queryTeachers(Teacher teacher);
+
+    /**
+     * 添加老师教授的课程
+     * @param teacherCourseRel
+     */
+    void addMyCourse(TeacherCourseRel teacherCourseRel);
+
 }

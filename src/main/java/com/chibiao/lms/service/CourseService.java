@@ -4,6 +4,8 @@ import com.chibiao.lms.domain.Course;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.PageListRes;
 
+import java.util.List;
+
 /**
  * 课程服务
  *
@@ -25,5 +27,12 @@ public interface CourseService {
      * @return
      */
     Boolean addCourse(Course course);
+
+    /**
+     * 根据院系编号查询课程
+     * @param deptNo 院系编号
+     * @return 课程信息list
+     */
+    List<Course> selectCourseByDept(Long deptNo);
 
 }

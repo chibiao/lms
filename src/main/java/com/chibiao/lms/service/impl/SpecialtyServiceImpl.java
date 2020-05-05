@@ -61,18 +61,22 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 
     @Override
     public List<Specialty> specialtyByDeptNo(Long detpNo) {
-        // 从缓存中查找
-        String allDepartmentJson = redisClient.get(RedisPrefixEnum.specialtyPrefix + "list" + detpNo);
-        if (!StringUtils.isEmpty(allDepartmentJson)) {
-            return JsonUtil.parseArray(allDepartmentJson, Specialty.class);
+        try {
+            // 从缓存中查找
+            String allDepartmentJson = redisClient.get(RedisPrefixEnum.specialtyPrefix + "list" + detpNo);
+            if (!StringUtils.isEmpty(allDepartmentJson)) {
+                return JsonUtil.parseArray(allDepartmentJson, Specialty.class);
+            }
+            // 数据库查找
+            List<Specialty> specialties = specialtyMapper.querySpecialtyByDeptNo(detpNo);
+            if (!CollectionUtils.isEmpty(specialties)){
+                // 放入缓存 时间为10s
+                redisClient.setEx(RedisPrefixEnum.departmentPrefix + "list" + detpNo, JSON.toJSONString(specialties), 10, TimeUnit.SECONDS);
+            }
+            return specialties;
+        }catch (Throwable e){
+            return specialtyMapper.querySpecialtyByDeptNo(detpNo);
         }
-        // 数据库查找
-        List<Specialty> specialties = specialtyMapper.querySpecialtyByDeptNo(detpNo);
-        if (!CollectionUtils.isEmpty(specialties)){
-            // 放入缓存 时间为10s
-            redisClient.setEx(RedisPrefixEnum.departmentPrefix + "list" + detpNo, JSON.toJSONString(specialties), 10, TimeUnit.SECONDS);
-        }
-        return specialties;
     }
 
 }

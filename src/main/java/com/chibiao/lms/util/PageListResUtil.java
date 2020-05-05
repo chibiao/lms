@@ -19,4 +19,11 @@ public class PageListResUtil {
         pageListRes.setCount(page.getTotal());
         return pageListRes;
     }
+    public static PageListRes buildSuccessListRes(List list) {
+        PageListRes pageListRes = new PageListRes();
+        pageListRes.setData(list);
+        pageListRes.setCode(0);
+        pageListRes.setCount((long)list.size());
+        return pageListRes;
+    }
 }

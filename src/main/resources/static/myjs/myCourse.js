@@ -5,50 +5,43 @@ layui.use(['form', 'layer','jquery','table'], function () {
     layer = layui.layer;
     //第一个实例
     table.render({
-        elem: '#course_datagrid'
-        , url: '/course/courseList' //数据接口
+        elem: '#myCourse_datagrid'
+        , url: '/teacher/selectMyCourse' //数据接口
         , toolbar:'#toolbar'
-        , page: true //开启分页
         , cols: [[ //表头
             {field: 'courseNo', title: '课程编号'}
             , {field: 'courseName', title: '课程名称'}
             , {field: 'courseDesc', title: '课程描述'}
-            , {field: 'department.deptName', title: '所属院系'
-                ,templet: function(d){
-                    return d.department.deptName;
-                }}
         ]]
 
     });
 
     //监听头工具栏
-    table.on('toolbar(course)', function (obj) {
+    table.on('toolbar(myCourse)', function (obj) {
         switch(obj.event){
             case 'add':
-                addCourse=layer.open({
+                addMyCourse=layer.open({
                     type: 1,
-                    content: $("#addCourse"), //这里content是一个普通的String
+                    content: $("#addMyCourse"), //这里content是一个普通的String
                     area: ['500px', '300px']
                 });
                 break;
         }
     });
-
     //监听提交
     form.on('submit(add)', function(data) {
         $.ajax({
             data:data.field,
             type:"post",
-            url:"/course/addCourse",
+            url:"/teacher/addMyCourse",
             dataType:"json",
             success:function (result) {
                 if(result.code == "0000"){
                     if (result.data){
                         layer.msg("添加成功");
                         //关闭当前frame
-                        layer.close(addCourse);
-                        table.reload('course_datagrid');
-                        $("#addCourse")[0].reset();
+                        layer.close(addMyCourse);
+                        table.reload('myCourse_datagrid');
                     } else {
                         layer.msg(result.message);
                     }
@@ -64,20 +57,33 @@ layui.use(['form', 'layer','jquery','table'], function () {
     $.ajax({
         data:{},
         type:"get",
-        url:"/department/allDepartment",
+        url:"/teacher/selectCourseByTeacherDept",
         dataType:"json",
         success:function (result) {
             if (result.code == "0000") {
                 if (result.data.length!=0){
                     if (result.data.length!=0){
                         $.each(result.data,function(index,item){
-                            $("#L_deptNo").append("<option value='" + item.deptNo + "'>" + item.deptName + "</option>");
+                            $("#L_courseName").append("<option value=''></option>");
+                            $("#L_courseName").append("<option value='" + item.courseNo + "'>" + item.courseName + "</option>");
                         });
                     }
                     form.render();
                 }
                 form.render();
             }
+        }
+    });
+
+    // 监听select选择事件
+    form.on('select(courseSelect)', function(data){
+        console.log("aaa");
+        if (data.value == ""){
+            $('#L_courseNo').val('');
+            form.render();
+        }else {
+            $('#L_courseNo').val(data.value);
+            form.render();
         }
     });
 

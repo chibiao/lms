@@ -17,4 +17,9 @@ public class Course {
      */
     private String courseDesc;
 
+    /**
+     * 课程所属院系
+     */
+    private Department department;
+
 }

@@ -36,4 +36,9 @@ public class CourseServiceImpl implements CourseService {
         courseMapper.insert(course);
         return Boolean.TRUE;
     }
+
+    @Override
+    public List<Course> selectCourseByDept(Long deptNo) {
+        return courseMapper.selectCourseByDept(deptNo);
+    }
 }

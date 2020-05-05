@@ -86,15 +86,20 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> allDepartment() {
-        // 从缓存中查找
-        String allDepartmentJson = redisClient.get(RedisPrefixEnum.departmentPrefix + "list");
-        if (!StringUtils.isEmpty(allDepartmentJson)){
-            return JsonUtil.parseArray(allDepartmentJson,Department.class);
+        try {
+            // 从缓存中查找
+            String allDepartmentJson = redisClient.get(RedisPrefixEnum.departmentPrefix + "list");
+            if (!StringUtils.isEmpty(allDepartmentJson)){
+                return JsonUtil.parseArray(allDepartmentJson,Department.class);
+            }
+            // 数据库查找
+            List<Department> departments = departmentMapper.queryDepartment();
+            // 放入缓存 时间为10s
+            redisClient.setEx(RedisPrefixEnum.departmentPrefix + "list",JSON.toJSONString(departments),10, TimeUnit.SECONDS);
+            return departments;
+        }catch (Throwable e){
+            // 数据库查找
+            return departmentMapper.queryDepartment();
         }
-        // 数据库查找
-        List<Department> departments = departmentMapper.queryDepartment();
-        // 放入缓存 时间为10s
-        redisClient.setEx(RedisPrefixEnum.departmentPrefix + "list",JSON.toJSONString(departments),10, TimeUnit.SECONDS);
-        return departmentMapper.queryDepartment();
     }
 }

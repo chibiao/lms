@@ -1,8 +1,12 @@
 package com.chibiao.lms.service;
 
+import com.chibiao.lms.domain.Course;
 import com.chibiao.lms.domain.Teacher;
+import com.chibiao.lms.domain.TeacherCourseRel;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.PageListRes;
+
+import java.util.List;
 
 /**
  * 教师服务
@@ -46,4 +50,17 @@ public interface TeacherService {
      * @return
      */
     Teacher selectByTeacherNo(Long teacherNo);
+
+    /**
+     * 添加老师教授的课程
+     * @return
+     */
+    Boolean addMyCourse(TeacherCourseRel teacherCourseRel);
+
+    /**
+     * 查询我教授的课程
+     * @param teacherNo 教师编号
+     * @return 课程信息
+     */
+    List<Course> selectMyCourse(Long teacherNo);
 }

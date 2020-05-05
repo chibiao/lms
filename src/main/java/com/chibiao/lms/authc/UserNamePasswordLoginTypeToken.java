@@ -16,7 +16,7 @@ public class UserNamePasswordLoginTypeToken extends UsernamePasswordToken implem
      */
     private static final long serialVersionUID = 1L;
     /**
-     * 登录方式 1 学生 2 教师
+     * 登录方式 1 学生 2 教师 3 管理员
      */
     private Integer loginType;
 

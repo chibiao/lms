@@ -5,16 +5,18 @@
     <id column="course_no" property="courseNo" jdbcType="BIGINT" />
     <result column="course_name" property="courseName" jdbcType="VARCHAR" />
     <result column="course_desc" property="courseDesc" jdbcType="VARCHAR" />
+    <result column="dept_no" property="department.deptNo" jdbcType="BIGINT" />
+    <result column="dept_name" property="department.deptName" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="insert" parameterType="com.chibiao.lms.domain.Course" >
-    insert into course (course_no, course_name, course_desc
+    insert into course (course_no, course_name, course_desc,dept_no
       )
-    values (#{courseNo,jdbcType=BIGINT}, #{courseName,jdbcType=VARCHAR}, #{courseDesc,jdbcType=VARCHAR}
+    values (#{courseNo,jdbcType=BIGINT}, #{courseName,jdbcType=VARCHAR}, #{courseDesc,jdbcType=VARCHAR},#{department.deptNo,jdbcType=BIGINT}
       )
   </insert>
     <select id="queryCourses" resultMap="BaseResultMap">
-    select course_no, course_name, course_desc
-    from course
+    select c.course_no, c.course_name, c.course_desc,d.dept_no,d.dept_name
+    from course c left join department d on c.dept_no = d.dept_no
     <where>
         <if test="courseNo!=null">
             and course_no=#{courseNo}
@@ -23,5 +25,18 @@
             and course_name = #{courseName}
         </if>
     </where>
+    </select>
+
+    <select id="selectMyCourse" resultMap="BaseResultMap">
+     select course_no, course_name, course_desc,dept_no
+     from course
+     where course_no
+     in
+     (select course_no from teacher_course_rel where teacher_no = #{teacherNo})
+    </select>
+    <select id="selectCourseByDept" resultMap="BaseResultMap">
+      select course_no, course_name, course_desc,dept_no
+      from course
+      where dept_no = #{deptNo}
     </select>
 </mapper>

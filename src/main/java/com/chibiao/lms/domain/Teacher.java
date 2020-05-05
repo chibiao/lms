@@ -2,6 +2,8 @@ package com.chibiao.lms.domain;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Teacher {
     /**
@@ -37,4 +39,13 @@ public class Teacher {
      */
     private Integer teacherType;
 
+    /**
+     * 教师所属院系
+     */
+    private Department department;
+
+    /**
+     * 教师教授的课程
+     */
+    private List<Course> courses;
 }
