@@ -98,7 +98,7 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="leave_record"></table>
+		<table tableName="class_course_time"></table>
 
 	</context>
 </generatorConfiguration>

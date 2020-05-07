@@ -53,5 +53,13 @@ public class IndexController {
     public String myCourse(){
         return "myCourse";
     }
+    @RequestMapping("/myClazz")
+    public String myClazz(){
+        return "myClazz";
+    }
+    @RequestMapping("/myClazzCourseTime")
+    public String myClazzCourseTime(){
+        return "myClazzCourseTime";
+    }
 
 }

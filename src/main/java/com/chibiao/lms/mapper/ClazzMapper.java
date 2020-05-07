@@ -17,4 +17,11 @@ public interface ClazzMapper {
      * @return
      */
     List<Clazz> selectBySpecialtyNo(Long specialtyNo);
+
+    /**
+     * 根据教师和班级关系 查询出班级信息
+     * @param teacherNo 教师编号
+     * @return 班级信息
+     */
+    List<Clazz> selectByTeacherNo(Long teacherNo);
 }

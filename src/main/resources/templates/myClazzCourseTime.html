@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>欢迎页面-X-admin2.2</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <link rel="stylesheet" th:href="@{/css/font.css}">
+        <link rel="stylesheet" th:href="@{/css/xadmin.css}">
+        <script th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
+        <script th:src="@{/js/jquery.min.js}" charset="utf-8"></script>
+        <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+        <script type="text/javascript" th:src="@{/myjs/myClazzCourseTime.js}"></script>
+    </head>
+    <body>
+        <div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">首页</a>
+            <a href="">个人信息管理</a>
+            <a>
+              <cite>我的课程时间</cite></a>
+          </span>
+          <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+        </div>
+        <!--头部工具栏-->
+        <script type="text/html" id="toolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-xs" lay-event="add"><i class="layui-icon"></i>添加</button>
+            </div>
+        </script>
+        <!--内容-->
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body layui-table-body layui-table-main">
+                            <!-- 数据表格 -->
+                            <table id="myClazzCourseTime_datagrid" lay-filter="myClazzCourseTime"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--添加院系的弹窗-->
+        <form class="layui-form" id="addMyClazzCourseTime" style="display: none" method="post">
+            <div class="layui-form-item">
+                <label for="L_courseNo" class="layui-form-label">
+                    <span class="x-red">*</span>课程信息</label>
+                <div class="layui-input-inline">
+                    <select  id="L_courseNo" name="courseNo" lay-verify="required" lay-search="" lay-filter="courseNoSelect" class="select">
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_clazzNo" class="layui-form-label">
+                    <span class="x-red">*</span>上课班级</label>
+                <div class="layui-input-inline">
+                    <select  id="L_clazzNo" name="clazzNo" lay-verify="required" lay-search="" lay-filter="clazzNoSelect" class="select">
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_courseDay" class="layui-form-label">
+                    <span class="x-red">*</span>上课日期</label>
+                <div class="layui-input-inline">
+                    <input  type="text" class="layui-input" id="L_courseDay" name="courseDay" lay-verify="required" lay-search="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_courseTime" class="layui-form-label">
+                    <span class="x-red">*</span>上课时间</label>
+                <div class="layui-input-inline">
+                    <input  type="text" class="layui-input" id="L_courseTime" name="courseTime" lay-verify="required" lay-search="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_courseWeek" class="layui-form-label">
+                    <span class="x-red">*</span>上课周</label>
+                <div class="layui-input-inline">
+                    <select  id="L_courseWeek" name="courseWeek" lay-verify="required" lay-search="">
+                        <option value=""></option>
+                        <option value="0">星期日</option>
+                        <option value="1">星期一</option>
+                        <option value="2">星期二</option>
+                        <option value="3">星期三</option>
+                        <option value="4">星期四</option>
+                        <option value="5">星期五</option>
+                        <option value="6">星期六</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_courseWeek" class="layui-form-label"></label>
+                <button class="layui-btn" lay-filter="add" lay-submit="">增加</button>
+            </div>
+        </form>
+    </body>
+    <!--表格操作栏-->
+    <script type="text/html" id="bar">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+    <script>var _hmt = _hmt || []; (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();</script>
+</html>

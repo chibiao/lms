@@ -1,9 +1,11 @@
 package com.chibiao.lms.service.impl;
 
 import com.chibiao.lms.constant.StudentConst;
-import com.chibiao.lms.domain.Course;
-import com.chibiao.lms.domain.Teacher;
-import com.chibiao.lms.domain.TeacherCourseRel;
+import com.chibiao.lms.domain.*;
+import com.chibiao.lms.error.BusinessErrorCode;
+import com.chibiao.lms.exception.BusinessException;
+import com.chibiao.lms.mapper.ClazzCourseTimeMapper;
+import com.chibiao.lms.mapper.ClazzMapper;
 import com.chibiao.lms.mapper.CourseMapper;
 import com.chibiao.lms.mapper.TeacherMapper;
 import com.chibiao.lms.param.PageParam;
@@ -29,6 +31,10 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherMapper teacherMapper;
     @Autowired
     private CourseMapper courseMapper;
+    @Autowired
+    private ClazzMapper clazzMapper;
+    @Autowired
+    private ClazzCourseTimeMapper clazzCourseTimeMapper;
 
     @Override
     public PageListRes queryTeachers(Teacher teacher, PageParam pageParam) {
@@ -68,6 +74,10 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public Boolean addMyCourse(TeacherCourseRel teacherCourseRel) {
+        TeacherCourseRel courseRel = teacherMapper.selectTeacherCourseRel(teacherCourseRel.getCourseNo(),teacherCourseRel.getTeacherNo());
+        if (courseRel != null){
+            throw new BusinessException(BusinessErrorCode.TEACHER_COURSE_REL_EXIST);
+        }
         teacherMapper.addMyCourse(teacherCourseRel);
         return Boolean.TRUE;
     }
@@ -76,4 +86,20 @@ public class TeacherServiceImpl implements TeacherService {
     public List<Course> selectMyCourse(Long teacherNo) {
         return courseMapper.selectMyCourse(teacherNo);
     }
+
+    @Override
+    public Boolean addMyClazz(TeacherClazzRel teacherClazzRel) {
+        TeacherClazzRel courseRel = teacherMapper.selectTeacherClazzRel(teacherClazzRel.getTeacherNo(),teacherClazzRel.getClazzNo());
+        if (courseRel != null){
+            throw new BusinessException(BusinessErrorCode.TEACHER_CLAZZ_REL_EXIST);
+        }
+        teacherMapper.addMyClazz(teacherClazzRel);
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public List<Clazz> selectMyClazz(Long teacherNo) {
+        return clazzMapper.selectByTeacherNo(teacherNo);
+    }
+
 }

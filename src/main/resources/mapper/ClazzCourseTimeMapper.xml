@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chibiao.lms.mapper.ClazzCourseTimeMapper" >
+  <resultMap id="BaseResultMap" type="com.chibiao.lms.domain.ClazzCourseTime" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="clazz_no" property="clazz.clazzNo" jdbcType="BIGINT" />
+    <result column="clazz_name" property="clazz.clazzName" jdbcType="VARCHAR" />
+    <result column="course_no" property="course.courseNo" jdbcType="BIGINT" />
+    <result column="course_name" property="course.courseName" jdbcType="VARCHAR" />
+    <result column="course_begin_time" property="courseBeginTime" jdbcType="DATE" />
+    <result column="course_end_time" property="courseEndTime" jdbcType="DATE" />
+    <result column="course_week" property="courseWeek" jdbcType="INTEGER" />
+    <result column="course_begin_day" property="courseBeginDay" jdbcType="DATE" />
+    <result column="course_end_day" property="courseEndDay" jdbcType="DATE" />
+    <result column="teacher_no" property="teacher.teacherNo" jdbcType="BIGINT" />
+  </resultMap>
+    <insert id="addClazzCourseTime">
+        insert into clazz_course_time(clazz_no,course_no,course_begin_time,course_end_time,course_week,course_begin_day,course_end_day,teacher_no)
+        values (#{clazz.clazzNo},#{course.courseNo},#{courseBeginTime},#{courseEndTime},#{courseWeek},#{courseBeginDay},#{courseEndDay},#{teacher.teacherNo})
+    </insert>
+
+    <select id="selectClazzCourseTimeByTeacherNo" resultMap="BaseResultMap">
+        select cct.clazz_no,c.clazz_name,cct.course_no,r.course_name,course_begin_time,course_end_time,course_week,course_begin_day,course_end_day,teacher_no
+        from clazz_course_time cct
+        left join clazz c on c.clazz_no = cct.clazz_no
+        left join course r on r.course_no = cct.course_no
+        where teacher_no=#{teacherNo}
+    </select>
+    <select id="selectClazzCourseTime" resultMap="BaseResultMap">
+        select clazz_no,course_no,course_begin_time,course_end_time,course_week,course_begin_day,course_end_day,teacher_no
+        from clazz_course_time
+        where clazz_no = #{clazz.clazzNo}
+        and course_week = #{courseWeek}
+        and ((#{courseBeginDay} &gt;= course_begin_day and #{courseBeginDay} &lt;= course_end_day) or (#{courseEndDay} &gt;= course_begin_day and #{courseEndDay} &lt;= course_end_day))
+        and ((#{courseBeginTime} &gt;= course_begin_time and #{courseBeginTime} &lt;= course_end_time) or (#{courseEndTime} &gt;= course_begin_time and #{courseBeginTime} &lt;= course_end_time))
+        limit 1
+    </select>
+
+</mapper>

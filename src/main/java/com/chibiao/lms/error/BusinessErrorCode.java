@@ -34,6 +34,12 @@ public enum  BusinessErrorCode implements ErrorCode{
     UNKOWN_ACCOUNT("1400","未知账户"),
     PASSWORD_FALSE("1401","密码不正确"),
     ACCOUNT_OR_PASSWORD_FALSE("1402","用户名或密码不正确"),
+    /**
+     * 教师信息异常 1500-1599
+     */
+    TEACHER_COURSE_REL_EXIST("1500","您教授的课程已存在"),
+    TEACHER_CLAZZ_REL_EXIST("1501","您的班级已存在"),
+    COURSE_TIME_EXIST("1502","您选择的课程时间冲突")
     ;
     private final String code;
     private final String description;

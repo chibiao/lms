@@ -1,7 +1,10 @@
 package com.chibiao.lms.mapper;
 
 import com.chibiao.lms.domain.Teacher;
+import com.chibiao.lms.domain.TeacherClazzRel;
 import com.chibiao.lms.domain.TeacherCourseRel;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -29,4 +32,25 @@ public interface TeacherMapper {
      */
     void addMyCourse(TeacherCourseRel teacherCourseRel);
 
+    /**
+     * 查询教师和课程关系是否存在
+     * @param courseNo 课程编号
+     * @param teacherNo 教师编号
+     * @return
+     */
+    TeacherCourseRel selectTeacherCourseRel(@Param("courseNo") Long courseNo,@Param("teacherNo") Long teacherNo);
+
+    /**
+     * 查询教师和班级关系是否存在
+     * @param teacherNo 教师编号
+     * @param clazzNo 课程编号
+     * @return
+     */
+    TeacherClazzRel selectTeacherClazzRel(@Param("teacherNo") Long teacherNo,@Param("clazzNo") Long clazzNo);
+
+    /**
+     * 添加教师班级信息
+     * @param teacherClazzRel
+     */
+    void addMyClazz(TeacherClazzRel teacherClazzRel);
 }

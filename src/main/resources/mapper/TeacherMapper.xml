@@ -29,6 +29,10 @@
         insert into teacher_course_rel(course_no,teacher_no)
         values (#{courseNo},#{teacherNo})
     </insert>
+    <insert id="addMyClazz">
+        insert into teacher_clazz_rel(teacher_no,clazz_no)
+        values(#{teacherNo},#{clazzNo})
+    </insert>
     <update id="updateByPrimaryKey" parameterType="com.chibiao.lms.domain.Teacher" >
     update teacher
     set teacher_name = #{teacherName,jdbcType=VARCHAR},
@@ -64,5 +68,13 @@
                 and teacher_type = #{teacherType}
             </if>
         </where>
+    </select>
+    <select id="selectTeacherCourseRel" resultType="com.chibiao.lms.domain.TeacherCourseRel">
+        select teacher_no,course_no from teacher_course_rel
+        where teacher_no=#{teacherNo} and course_no=#{courseNo}
+    </select>
+    <select id="selectTeacherClazzRel" resultType="com.chibiao.lms.domain.TeacherClazzRel">
+        select teacher_no,clazz_no from teacher_clazz_rel
+        where teacher_no=#{teacherNo} and clazz_no=#{clazzNo}
     </select>
 </mapper>

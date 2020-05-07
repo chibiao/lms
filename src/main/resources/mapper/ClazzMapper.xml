@@ -37,4 +37,8 @@
         select clazz_no,clazz_year,clazz_name,clazz_desc,specialty_no,dept_no
         from clazz where specialty_no = #{specialtyNo}
     </select>
+    <select id="selectByTeacherNo" resultMap="BaseResultMap">
+        select clazz_no,clazz_year,clazz_name,clazz_desc,specialty_no,dept_no
+        from clazz where clazz_no in (select clazz_no from teacher_clazz_rel where teacher_no = #{teacherNo})
+    </select>
 </mapper>
