@@ -65,5 +65,9 @@ public class IndexController {
     public String clazzCourseTime(){
         return "clazzCourseTime";
     }
+    @RequestMapping("/leaveRecord")
+    public String leaveRecord(){
+        return "leaveRecord";
+    }
 
 }

@@ -1,11 +1,14 @@
 package com.chibiao.lms.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 /**
  * 请假信息表
+ * @author 迟彪
  */
 @Data
 public class LeaveRecord {
@@ -26,25 +29,29 @@ public class LeaveRecord {
      */
     private String leaveTitle;
     /**
-     * 请假单状态 请假单状态 1,新建  2，已提交 3，审批中 4，审批完成
-     */
-    private Integer leaveStatus;
-    /**
      * 请假原因
      */
     private String leaveReason;
     /**
+     * 请假单状态 0新建 1审批中 2审批完成 3已放弃
+     */
+    private Integer leaveStatus;
+    /**
      * 开始时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date leaveBeginTime;
     /**
      * 结束时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date leaveEndTime;
     /**
      * 请假天数
      */
-    private Double leaveDays;
+    private Integer leaveDays;
     /**
      * 专业编号
      */

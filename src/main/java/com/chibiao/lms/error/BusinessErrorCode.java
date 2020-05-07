@@ -28,6 +28,7 @@ public enum  BusinessErrorCode implements ErrorCode{
      * 学生信息异常 1300-1399
      */
     STUDENT_NO_EXIST("1300","学生编号已存在"),
+    LEAVERECORD_IS_EXIST("1301","您的请假单时间冲突"),
     /**
      * 登录异常 1400-1499
      */

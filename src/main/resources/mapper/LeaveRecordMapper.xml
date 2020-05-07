@@ -5,10 +5,12 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="student_id" property="studentId" jdbcType="BIGINT" />
     <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="leave_title" property="leaveTitle" jdbcType="VARCHAR" />
     <result column="leave_reason" property="leaveReason" jdbcType="VARCHAR" />
+    <result column="leave_status" property="leaveStatus" jdbcType="INTEGER" />
     <result column="leave_begin_time" property="leaveBeginTime" jdbcType="TIMESTAMP" />
     <result column="leave_end_time" property="leaveEndTime" jdbcType="TIMESTAMP" />
-    <result column="leave_days" property="leaveDays" jdbcType="DOUBLE" />
+    <result column="leave_days" property="leaveDays" jdbcType="INTEGER" />
     <result column="specialty_no" property="specialtyNo" jdbcType="BIGINT" />
     <result column="dept_no" property="deptNo" jdbcType="BIGINT" />
     <result column="clazz_no" property="clazzNo" jdbcType="BIGINT" />
@@ -18,37 +20,87 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.chibiao.lms.domain.LeaveRecord" >
-    insert into leave_record (id, student_id, student_name, 
-      leave_reason, leave_begin_time, leave_end_time, 
+    insert into leave_record (student_id, student_name, leave_title,
+      leave_reason, leave_status, leave_begin_time, leave_end_time,
       leave_days, specialty_no, dept_no, 
       clazz_no)
-    values (#{id,jdbcType=BIGINT}, #{studentId,jdbcType=BIGINT}, #{studentName,jdbcType=VARCHAR}, 
-      #{leaveReason,jdbcType=VARCHAR}, #{leaveBeginTime,jdbcType=TIMESTAMP}, #{leaveEndTime,jdbcType=TIMESTAMP}, 
-      #{leaveDays,jdbcType=DOUBLE}, #{specialtyNo,jdbcType=BIGINT}, #{deptNo,jdbcType=BIGINT}, 
+    values (#{studentId,jdbcType=BIGINT}, #{studentName,jdbcType=VARCHAR}, #{leaveTitle},
+      #{leaveReason,jdbcType=VARCHAR}, #{leaveStatus}, #{leaveBeginTime,jdbcType=TIMESTAMP}, #{leaveEndTime,jdbcType=TIMESTAMP},
+      #{leaveDays,jdbcType=INTEGER}, #{specialtyNo,jdbcType=BIGINT}, #{deptNo,jdbcType=BIGINT},
       #{clazzNo,jdbcType=BIGINT})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.chibiao.lms.domain.LeaveRecord" >
     update leave_record
-    set student_id = #{studentId,jdbcType=BIGINT},
-      student_name = #{studentName,jdbcType=VARCHAR},
+    set
+      leave_title = #{leaveTitle,jdbcType=VARCHAR},
       leave_reason = #{leaveReason,jdbcType=VARCHAR},
       leave_begin_time = #{leaveBeginTime,jdbcType=TIMESTAMP},
       leave_end_time = #{leaveEndTime,jdbcType=TIMESTAMP},
-      leave_days = #{leaveDays,jdbcType=DOUBLE},
-      specialty_no = #{specialtyNo,jdbcType=BIGINT},
-      dept_no = #{deptNo,jdbcType=BIGINT},
-      clazz_no = #{clazzNo,jdbcType=BIGINT}
+      leave_days = #{leaveDays,jdbcType=INTEGER},
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    <update id="updateLeaveStatus">
+        update leave_record
+        set leave_status = #{leaveStatus,jdbcType=INTEGER}
+        where id=#{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select id, student_id, student_name, leave_reason, leave_begin_time, leave_end_time, 
     leave_days, specialty_no, dept_no, clazz_no
     from leave_record
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, student_id, student_name, leave_reason, leave_begin_time, leave_end_time, 
+    select student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
     leave_days, specialty_no, dept_no, clazz_no
     from leave_record
   </select>
+    <select id="selectLeaveRecord" resultMap="BaseResultMap">
+        select student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
+        leave_days, specialty_no, dept_no, clazz_no
+        from leave_record
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="studentId!=null">
+                and student_id=#{studentId}
+            </if>
+            <if test="studentName!=null and studentName!=''">
+                and student_name=#{studentName}
+            </if>
+            <if test="leaveTitle!=null and leaveTitle!=''">
+                and leave_title=#{leaveTitle}
+            </if>
+            <if test="leaveReason!=null and leaveReason!=''">
+                and leave_reason=#{leaveReason}
+            </if>
+            <if test="leaveStatus!=null">
+                and leave_status=#{leaveStatus}
+            </if>
+            <if test="deptNo!=null">
+                and dept_no=#{deptNo}
+            </if>
+            <if test="specialtyNo!=null">
+                and specialty_no=#{specialtyNo}
+            </if>
+            <if test="clazzNo!=null">
+                and clazz_no=#{clazzNo}
+            </if>
+            <if test="leaveBeginTime!=null">
+                and #{leaveBeginTime} &lt;= leave_begin_time
+            </if>
+            <if test="leaveEndTime!=null">
+                and #{leaveEndTime} &gt;= leave_end_time
+            </if>
+        </where>
+    </select>
+    <select id="selectLeaveRecordByStudentIdAndLeaveBeginTime" resultMap="BaseResultMap">
+        select student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
+        leave_days, specialty_no, dept_no, clazz_no
+        from leave_record
+        where student_id=#{studentId}
+        and ((#{leaveBeginTime} &gt;= leave_begin_time and #{leaveBeginTime} &lt;= leave_end_time) or (#{leaveEndTime} &gt;= leave_begin_time and #{leaveEndTime} &lt;= leave_end_time))
+        limit 1
+    </select>
 </mapper>
