@@ -4,7 +4,12 @@ import com.chibiao.lms.domain.ClazzCourseTime;
 import com.chibiao.lms.error.BusinessErrorCode;
 import com.chibiao.lms.exception.BusinessException;
 import com.chibiao.lms.mapper.ClazzCourseTimeMapper;
+import com.chibiao.lms.param.PageParam;
+import com.chibiao.lms.result.PageListRes;
 import com.chibiao.lms.service.ClazzCourseTimeService;
+import com.chibiao.lms.util.PageListResUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +43,12 @@ public class ClazzCourseTimeServiceImpl implements ClazzCourseTimeService {
     @Override
     public List<ClazzCourseTime> selectClazzCourseTimeByTeacherNo(Long teacherNo) {
         return clazzCourseTimeMapper.selectClazzCourseTimeByTeacherNo(teacherNo);
+    }
+
+    @Override
+    public PageListRes selectClazzCourseTimeByClazzNo(ClazzCourseTime clazzCourseTime, PageParam pageParam) {
+        Page<Object> page = PageHelper.startPage(pageParam.getPage(), pageParam.getLimit());
+        List<ClazzCourseTime> list = clazzCourseTimeMapper.selectClazzCourseTimeByClazzNo(clazzCourseTime);
+        return PageListResUtil.buildSuccessPageListRes(page,list);
     }
 }

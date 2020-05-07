@@ -61,5 +61,9 @@ public class IndexController {
     public String myClazzCourseTime(){
         return "myClazzCourseTime";
     }
+    @RequestMapping("/clazzCourseTime")
+    public String clazzCourseTime(){
+        return "clazzCourseTime";
+    }
 
 }

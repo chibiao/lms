@@ -19,4 +19,11 @@ public interface ClazzCourseTimeMapper {
      * @return
      */
     ClazzCourseTime selectClazzCourseTime(ClazzCourseTime clazzCourseTime);
+
+    /**
+     * 根据课程编号查询班级上课时间
+     * @param clazzCourseTime 班级上课时间
+     * @return 班级上课时间list
+     */
+    List<ClazzCourseTime> selectClazzCourseTimeByClazzNo(ClazzCourseTime clazzCourseTime);
 }

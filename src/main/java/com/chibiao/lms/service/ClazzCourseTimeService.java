@@ -1,6 +1,8 @@
 package com.chibiao.lms.service;
 
 import com.chibiao.lms.domain.ClazzCourseTime;
+import com.chibiao.lms.param.PageParam;
+import com.chibiao.lms.result.PageListRes;
 
 import java.util.List;
 
@@ -24,4 +26,11 @@ public interface ClazzCourseTimeService {
      * @return 上课时间list
      */
     List<ClazzCourseTime> selectClazzCourseTimeByTeacherNo(Long teacherNo);
+
+    /**
+     * 根据班级编号查询班级上课时间
+     * @param clazzCourseTime 班级课程时间
+     * @return 分页查询
+     */
+    PageListRes selectClazzCourseTimeByClazzNo(ClazzCourseTime clazzCourseTime, PageParam pageParam);
 }

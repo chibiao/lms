@@ -22,6 +22,14 @@ public class LeaveRecord {
      */
     private String studentName;
     /**
+     * 请假单标题
+     */
+    private String leaveTitle;
+    /**
+     * 请假单状态 请假单状态 1,新建  2，已提交 3，审批中 4，审批完成
+     */
+    private Integer leaveStatus;
+    /**
      * 请假原因
      */
     private String leaveReason;

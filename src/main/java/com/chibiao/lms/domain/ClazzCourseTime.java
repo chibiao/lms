@@ -59,4 +59,10 @@ public class ClazzCourseTime {
      */
     private Teacher teacher;
 
+    /**
+     * 查询条件 日期
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date searchDay;
 }

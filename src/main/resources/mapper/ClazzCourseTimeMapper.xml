@@ -13,6 +13,7 @@
     <result column="course_begin_day" property="courseBeginDay" jdbcType="DATE" />
     <result column="course_end_day" property="courseEndDay" jdbcType="DATE" />
     <result column="teacher_no" property="teacher.teacherNo" jdbcType="BIGINT" />
+    <result column="teacher_name" property="teacher.teacherName" jdbcType="VARCHAR" />
   </resultMap>
     <insert id="addClazzCourseTime">
         insert into clazz_course_time(clazz_no,course_no,course_begin_time,course_end_time,course_week,course_begin_day,course_end_day,teacher_no)
@@ -36,4 +37,30 @@
         limit 1
     </select>
 
+    <select id="selectClazzCourseTimeByClazzNo" resultMap="BaseResultMap">
+        select cct.clazz_no,c.clazz_name,cct.course_no,r.course_name,course_begin_time,course_end_time,course_week,course_begin_day,course_end_day,cct.teacher_no,t.teacher_name
+        from clazz_course_time cct
+        left join clazz c on c.clazz_no = cct.clazz_no
+        left join course r on r.course_no = cct.course_no
+        left join teacher t on t.teacher_no = cct.teacher_no
+        <where>
+            <if test="clazz.clazzNo != null">
+                cct.clazz_no = #{clazz.clazzNo}
+            </if>
+            <if test="courseWeek != null">
+                and cct.course_week = #{courseWeek}
+            </if>
+            <if test="searchDay!=null">
+                and #{searchDay} &gt;= cct.course_begin_day
+                and #{searchDay} &lt;= cct.course_end_day
+            </if>
+            <if test="courseBeginDay!=null">
+                and #{courseBeginDay} &lt;= cct.course_begin_day
+            </if>
+            <if test="courseEndDay!=null">
+                and #{courseEndDay} &gt;= cct.course_end_day
+            </if>
+        </where>
+        order by course_week asc,course_begin_time asc
+    </select>
 </mapper>

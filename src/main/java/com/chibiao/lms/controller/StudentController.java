@@ -3,21 +3,18 @@ package com.chibiao.lms.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
 import com.chibiao.lms.annotation.Log;
-import com.chibiao.lms.domain.Clazz;
-import com.chibiao.lms.domain.Student;
-import com.chibiao.lms.domain.StudentData;
+import com.chibiao.lms.domain.*;
 import com.chibiao.lms.exception.BusinessException;
 import com.chibiao.lms.listener.UploadStudentDataListener;
 import com.chibiao.lms.param.EmailParam;
 import com.chibiao.lms.param.PageParam;
 import com.chibiao.lms.result.HttpResult;
 import com.chibiao.lms.result.PageListRes;
-import com.chibiao.lms.service.ClazzService;
-import com.chibiao.lms.service.DepartmentService;
-import com.chibiao.lms.service.SpecialtyService;
-import com.chibiao.lms.service.StudentService;
+import com.chibiao.lms.service.*;
+import com.chibiao.lms.util.DateTools;
 import com.chibiao.lms.util.HttpResultUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +45,8 @@ public class StudentController {
     private SpecialtyService specialtyService;
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private ClazzCourseTimeService clazzCourseTimeService;
     @GetMapping("/studentList")
     @ResponseBody
     @Log(jKey = "com.chibiao.lms.controller.StudentController.studentList",errorReturnHttpResult = false)
@@ -91,6 +90,24 @@ public class StudentController {
     public HttpResult<Boolean> resetStudentPassword(@PathVariable("studentId") Long studentId) {
         Boolean result = studentService.resetStudentPassword(studentId);
         return HttpResultUtil.buildSuccessHttpResult(result);
+    }
+
+    /**
+     * 根据班级编号查询班级上课时间
+     * @param clazzCourseTime 班级课程时间
+     * @return 分页查询
+     */
+    @GetMapping("/selectClazzCourseTimeByClazzNo")
+    @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.StudentController.selectClazzCourseTimeByClazzNo",errorReturnHttpResult = false)
+    public PageListRes selectClazzCourseTimeByClazzNo(ClazzCourseTime clazzCourseTime, PageParam pageParam){
+        Student student = (Student) SecurityUtils.getSubject().getPrincipal();
+        clazzCourseTime.setClazz(student.getClazz());
+        if (clazzCourseTime.getSearchDay() != null ){
+            Integer week = DateTools.dateToWeek(clazzCourseTime.getSearchDay());
+            clazzCourseTime.setCourseWeek(week);
+        }
+        return clazzCourseTimeService.selectClazzCourseTimeByClazzNo(clazzCourseTime, pageParam);
     }
 
     /**
