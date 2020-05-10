@@ -51,12 +51,12 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
+    select id,student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
     leave_days, specialty_no, dept_no, clazz_no
     from leave_record
   </select>
     <select id="selectLeaveRecord" resultMap="BaseResultMap">
-        select student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
+        select id,student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
         leave_days, specialty_no, dept_no, clazz_no
         from leave_record
         <where>
@@ -96,7 +96,7 @@
         </where>
     </select>
     <select id="selectLeaveRecordByStudentIdAndLeaveBeginTime" resultMap="BaseResultMap">
-        select student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
+        select id,student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
         leave_days, specialty_no, dept_no, clazz_no
         from leave_record
         where student_id=#{studentId}

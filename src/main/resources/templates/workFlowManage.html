@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>欢迎页面-X-admin2.2</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <link rel="stylesheet" th:href="@{/css/font.css}">
+        <link rel="stylesheet" th:href="@{/css/xadmin.css}">
+        <script th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
+        <script th:src="@{/js/jquery.min.js}" charset="utf-8"></script>
+        <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+        <script type="text/javascript" th:src="@{/myjs/workFlowManage.js}"></script>
+    </head>
+    <body>
+        <div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">首页</a>
+            <a href="">流程管理</a>
+            <a>
+              <cite>流程管理</cite></a>
+          </span>
+          <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+        </div>
+        <!--内容-->
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>查询条件</legend>
+                    </fieldset>
+                    <form class="layui-form" id="searchForm" method="post">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label" >流程名称:</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="deploymentName"  autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <a class="layui-btn search_btn" >查询</a>
+                                <button type="reset" class="layui-btn layui-btn-warm">清空</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="layui-card">
+                        <div class="layui-card-body layui-table-body layui-table-main">
+                            <!-- 数据表格 -->
+                            <table id="deploymentList" lay-filter="deploymentList"></table>
+                            <table id="processDefinitionList" lay-filter="processDefinitionList"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form class="layui-form" method="post" id="frm" style="display: none">
+            <div class="layui-form-item">
+                <label class="layui-form-label">流程名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="deploymentName" lay-verify="required" autocomplete="off"
+                           placeholder="请输入流程名称" id="deploymentName" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">流程图文件</label>
+                <div class="layui-input-block">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn layui-btn-normal" id="uploadProcess">请选择流程图文件</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center;">
+                <a class="layui-btn" href="javascript:void(0)" lay-submit="" id="addWorkFlow"  lay-filter="addWorkFlow">提交</a >
+                <button type="reset" class="layui-btn layui-btn-warm">重置</button>
+            </div>
+        </form>
+        <img alt="流程图" src="" id="workFlowImage" style="display: none">
+    </body>
+
+    <!--表格工具条-->
+    <script type="text/html" id="deploymentTableToolBar">
+        <a class="layui-btn layui-btn layui-btn" lay-event="add">添加</a>
+    </script>
+    <!--操作-->
+    <script type="text/html" id="deploymentListBar">
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-xs" lay-event="viewProcessImage">查看流程图</a>
+    </script>
+    <script>var _hmt = _hmt || []; (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();</script>
+</html>

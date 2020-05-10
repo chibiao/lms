@@ -1,5 +1,6 @@
 package com.chibiao.lms.util;
 
+import com.chibiao.lms.domain.ActDeploymentEntity;
 import com.chibiao.lms.result.PageListRes;
 import com.github.pagehelper.Page;
 
@@ -24,6 +25,14 @@ public class PageListResUtil {
         pageListRes.setData(list);
         pageListRes.setCode(0);
         pageListRes.setCount((long)list.size());
+        return pageListRes;
+    }
+
+    public static PageListRes buildSuccessCountListRes(long count, List list) {
+        PageListRes pageListRes = new PageListRes();
+        pageListRes.setData(list);
+        pageListRes.setCode(0);
+        pageListRes.setCount(count);
         return pageListRes;
     }
 }

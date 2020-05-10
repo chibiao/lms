@@ -4,7 +4,6 @@ import com.chibiao.lms.domain.Teacher;
 import com.chibiao.lms.domain.TeacherClazzRel;
 import com.chibiao.lms.domain.TeacherCourseRel;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 

@@ -1,3 +1,4 @@
+var tableIns;
 layui.use(['form', 'layer','jquery','table','laydate'], function () {
     var table = layui.table;
     $ = layui.jquery;
@@ -28,7 +29,7 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
         ,trigger: 'click'//呼出事件改成click 解决闪退问题
     });
     //第一个实例
-    table.render({
+    tableIns = table.render({
         elem: '#leaveRecord_datagrid'
         , url: '/leaveRecord/selectLeaveRecord' //数据接口
         , page: true
@@ -95,6 +96,62 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
         });
         return false;
     });
+    //列表操作
+    table.on('tool(leaveRecord)', function(obj){
+        var data = obj.data;
+        switch(obj.event){
+            case 'edit':
+                addLeaveRecord=layer.open({
+                    type: 1,
+                    content: $("#addLeaveRecord"), //这里content是一个普通的String
+                    area: ['700px', '400px']
+                });
+                break;
+            case 'del':
+                break;
+            case 'startProcess':
+                layer.confirm('确定要提交【'+data.leaveTitle+'】请假单吗？',{icon:3, title:'提示信息'},function(index){
+                    $.post("/workFlow/startProcess",{
+                        id : data.id  //将需要删除的id作为参数传入
+                    },function(result){
+                        if(result.code == "0000"){
+                            if (result.data){
+                                layer.msg("提交成功");
+                                //刷新table
+                                tableIns.reload();
+                                //关闭提示框
+                                layer.close(index);
+                            } else {
+                                layer.msg(result.message);
+                            }
+                        }else {
+                            layer.msg(result.message);
+                        }
+                    })
+                });
+                break;
+        }
+
+        if(layEvent === 'edit'){ //编辑
+            updateLeaveBill(data);//data主当前点击的行
+        }else if(layEvent === 'del'){ //删除
+            layer.confirm('确定删【'+data.title+'】请假单吗？',{icon:3, title:'提示信息'},function(index){
+                $.post("${ctx}/leaveBill/deleteLeaveBill.action",{
+                    id : data.id  //将需要删除的id作为参数传入
+                },function(data){
+                    //刷新table
+                    tableIns.reload();
+                    //关闭提示框
+                    layer.close(index);
+                })
+            });
+        }else if(layEvent==="startProcess"){
+            startProcess(data);//请假单的对象
+        }else if(layEvent==='viewSpProcess'){
+            viewSpProcess(data);
+        }
+    });
+
     //点击搜索条件
     $('#search').on('click', function () {
         // 搜索条件

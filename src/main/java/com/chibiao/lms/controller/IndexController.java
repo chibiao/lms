@@ -69,5 +69,13 @@ public class IndexController {
     public String leaveRecord(){
         return "leaveRecord";
     }
+    @RequestMapping("/workFlowManage")
+    public String workFlowManage(){
+        return "workFlowManage";
+    }
+    @RequestMapping("/taskManage")
+    public String taskManager(){
+        return "taskManage";
+    }
 
 }
