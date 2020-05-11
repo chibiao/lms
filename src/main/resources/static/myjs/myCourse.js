@@ -77,7 +77,6 @@ layui.use(['form', 'layer','jquery','table'], function () {
 
     // 监听select选择事件
     form.on('select(courseSelect)', function(data){
-        console.log("aaa");
         if (data.value == ""){
             $('#L_courseNo').val('');
             form.render();

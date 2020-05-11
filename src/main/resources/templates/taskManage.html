@@ -42,6 +42,48 @@
                 </div>
             </div>
         </div>
+        <div style="display: none" id="task">
+            <form class="layui-form" method="post" id="frm" lay-filter="completeTask">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">请假标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="leaveTitle" value="" disabled="disabled" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">请假天数</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="leaveDays" value=""  disabled="disabled" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">请假时间</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="leaveBeginTime" value="" disabled="disabled" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">请假原因</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入请假单内容" disabled="disabled" name="leaveReason" id="leaveReson" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">批注</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入批注内容"  name="comment" id="comment" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center;">
+                    <input type="button" value="同意"  class="layui-btn dotask" />
+                    <input type="button" value="驳回"  class="layui-btn dotask" />
+                    <input type="button" value="放弃"  class="layui-btn dotask" />
+                </div>
+                <table id="commentList" lay-filter="commentList"></table>
+            </form>
+        </div>
     </body>
     <script>var _hmt = _hmt || []; (function() {
         var hm = document.createElement("script");

@@ -108,15 +108,13 @@ public class WorkFlowController {
         return this.workFlowService.queryCurrentUserTask(workFlowVo);
     }
 
-    @RequestMapping("/toDoTask")
-    public String toDoTask(WorkFlowVo workFlowVo, Model model) {
+    @GetMapping("/toDoTask/{taskId}")
+    @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.WorkFlowController.toDoTask")
+    public HttpResult<LeaveRecord> toDoTask(@PathVariable("taskId") String taskId) {
         //1,根据任务ID查询请假单的信息
-        LeaveRecord leaveRecord = this.workFlowService.queryLeaveRecordByTaskId(workFlowVo.getTaskId());
-        model.addAttribute("leaveRecord", leaveRecord);
-        //2,根据任务ID查询连线信息
-        List<String> outcomeName = this.workFlowService.queryOutComeByTaskId(workFlowVo.getTaskId());
-        model.addAttribute("outcomes", outcomeName);
-        return "sys/workFlow/doTaskManager";
+        LeaveRecord result = this.workFlowService.queryLeaveRecordByTaskId(taskId);
+        return HttpResultUtil.buildSuccessHttpResult(result);
     }
 
     @RequestMapping("/loadAllCommentByTaskId")

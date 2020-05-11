@@ -45,7 +45,7 @@
         where id=#{id}
     </update>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select id, student_id, student_name, leave_reason, leave_begin_time, leave_end_time, 
+    select id, student_id, student_name, leave_reason, leave_begin_time, leave_end_time, leave_title,
     leave_days, specialty_no, dept_no, clazz_no
     from leave_record
     where id = #{id,jdbcType=BIGINT}
