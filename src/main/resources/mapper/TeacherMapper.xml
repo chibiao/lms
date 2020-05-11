@@ -77,4 +77,12 @@
         select teacher_no,clazz_no from teacher_clazz_rel
         where teacher_no=#{teacherNo} and clazz_no=#{clazzNo}
     </select>
+    <select id="selectByClazzNo" resultMap="BaseResultMap">
+         select t.teacher_no, t.teacher_name, t.teacher_password, t.teacher_email, t.teacher_phone,
+        t.teacher_type,t.teacher_sex,t.dept_no
+        from teacher t
+        where teacher_no in (select teacher_no from teacher_clazz_rel where clazz_no=#{clazzNo})
+        and teacher_type = 1
+        limit 1
+    </select>
 </mapper>

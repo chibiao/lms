@@ -102,4 +102,9 @@ public class TeacherServiceImpl implements TeacherService {
         return clazzMapper.selectByTeacherNo(teacherNo);
     }
 
+    @Override
+    public Teacher selectByClazzNo(Long clazzNo) {
+        return teacherMapper.selectByClazzNo(clazzNo);
+    }
+
 }

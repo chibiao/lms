@@ -52,4 +52,11 @@ public interface TeacherMapper {
      * @param teacherClazzRel
      */
     void addMyClazz(TeacherClazzRel teacherClazzRel);
+
+    /**
+     * 根据班级查询出班级班主任
+     * @param clazzNo 班级编号
+     * @return
+     */
+    Teacher selectByClazzNo(Long clazzNo);
 }

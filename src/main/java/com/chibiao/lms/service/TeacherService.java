@@ -76,4 +76,10 @@ public interface TeacherService {
      */
     List<Clazz> selectMyClazz(Long teacherNo);
 
+    /**
+     * 查询出教师信息
+     * @param clazzNo
+     * @return
+     */
+    Teacher selectByClazzNo(Long clazzNo);
 }

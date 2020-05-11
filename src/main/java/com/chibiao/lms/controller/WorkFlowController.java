@@ -9,8 +9,10 @@ import com.chibiao.lms.result.PageListRes;
 import com.chibiao.lms.service.LeaveRecordService;
 import com.chibiao.lms.service.WorkFlowService;
 import com.chibiao.lms.util.HttpResultUtil;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,7 +83,13 @@ public class WorkFlowController {
 
     @RequestMapping("/viewProcessImage")
     public void viewProcessImage(WorkFlowVo workFlowVo, HttpServletResponse response) {
-        InputStream stream = this.workFlowService.queryProcessDeploymentImage(workFlowVo.getDeploymentId());
+        String deploymentId = workFlowVo.getDeploymentId();
+        if (StringUtils.isEmpty(deploymentId)){
+            ProcessDefinition processDefinition=this.workFlowService.queryProcessDefinitionByTaskId(workFlowVo.getTaskId());
+            //取出流程部署ID
+            deploymentId = processDefinition.getDeploymentId();
+        }
+        InputStream stream = this.workFlowService.queryProcessDeploymentImage(deploymentId);
         try {
             BufferedImage image = ImageIO.read(stream);
             ServletOutputStream outputStream = response.getOutputStream();

@@ -1,4 +1,6 @@
 var tableIns;
+var taskRecord;
+var leaveRecord;
 layui.use(['form', 'layer','jquery','table'], function () {
     var table = layui.table;
     $ = layui.jquery;
@@ -23,11 +25,11 @@ layui.use(['form', 'layer','jquery','table'], function () {
             {title: '操作', minWidth:175, templet:'#taskListBar',fixed:"right",align:"center"}
         ]]
     });
-
     //列表操作
     table.on('tool(taskList)', function(obj){
         var layEvent = obj.event,
             data = obj.data;
+            taskRecord = data;
         if(layEvent === 'toDoTask'){ //办理任务
             $.ajax({
                 data:{},
@@ -36,6 +38,7 @@ layui.use(['form', 'layer','jquery','table'], function () {
                 dataType:"json",
                 success:function (result) {
                     if (result.code == "0000") {
+                        leaveRecord = result.data;
                         //表单初始赋值
                         form.val('completeTask', {
                             "id": result.data.id ,// "name": "value"
@@ -67,9 +70,40 @@ layui.use(['form', 'layer','jquery','table'], function () {
                     }
                 }
             });
-
-        }else if(layEvent==="viewProcessImage"){
-
+        }else if (layEvent === 'viewProcessByTaskId') {
+            viewProcessImage=layer.open({
+                title : "修改待办任务",
+                type: 1,
+                content: $("#taskImage"), //这里content是一个普通的String
+                area: ['500px', '500px']
+            });
+            $("#taskImage").attr("src","/workFlow/viewProcessImage?taskId="+data.id);
         }
     });
+
+    //监控按钮事件
+    $(".dotask").click(function(obj){
+        var outcome=this.value;
+        $.post("/workFlow/doTask",{
+            taskId:taskRecord.id,
+            outcome:outcome,
+            id:leaveRecord.id,
+            comment:$("#comment").val()
+        },function(result){
+            if(result.code == "0000"){
+                if (result.data){
+                    layer.msg("办理成功");
+                    // 刷新表格
+                    tableIns.reload();
+                    //关闭当前frame
+                    layer.close(task);
+                } else {
+                    layer.msg(result.message);
+                }
+            }else {
+                layer.msg(result.message);
+            }
+        })
+    })
+
 });

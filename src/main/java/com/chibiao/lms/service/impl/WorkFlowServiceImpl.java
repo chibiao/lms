@@ -270,8 +270,15 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 		// 2,从任务里面取出流程实例ID
 		String processInstanceId = task.getProcessInstanceId();
 		// 设置批注人名
-        Teacher teacher = (Teacher) SecurityUtils.getSubject().getPrincipal();
-        String userName = teacher.getTeacherName();
+        // 1,得到办理人信息
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        String userName = null;
+        if (principal instanceof Teacher){
+            userName = ((Teacher) principal).getTeacherName();
+        }
+        if (principal instanceof Student){
+            userName = ((Student) principal).getStudentName();
+        }
 		/*
 		 * 因为批注人是org.activiti.engine.impl.cmd.AddCommentCmd 80代码使用 String userId =
 		 * Authentication.getAuthenticatedUserId(); CommentEntity comment = new
