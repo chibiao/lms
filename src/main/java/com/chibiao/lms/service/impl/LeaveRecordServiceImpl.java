@@ -28,7 +28,7 @@ public class LeaveRecordServiceImpl implements LeaveRecordService {
 
     @Override
     public Boolean addLeaveRecord(LeaveRecord leaveRecord) {
-        LeaveRecord record = leaveRecordMapper.selectLeaveRecordByStudentIdAndLeaveBeginTime(leaveRecord.getStudentId(),leaveRecord.getLeaveBeginTime(),leaveRecord.getLeaveEndTime());
+        LeaveRecord record = leaveRecordMapper.selectLeaveRecordByStudentIdAndLeaveBeginTime(leaveRecord.getStudentId(),leaveRecord.getLeaveBeginTime(),leaveRecord.getLeaveEndTime(),null);
         if (record!=null){
             throw new BusinessException(BusinessErrorCode.LEAVERECORD_IS_EXIST);
         }
@@ -38,6 +38,10 @@ public class LeaveRecordServiceImpl implements LeaveRecordService {
 
     @Override
     public Boolean updateLeaveRecord(LeaveRecord leaveRecord) {
+        LeaveRecord record = leaveRecordMapper.selectLeaveRecordByStudentIdAndLeaveBeginTime(leaveRecord.getStudentId(),leaveRecord.getLeaveBeginTime(),leaveRecord.getLeaveEndTime(),leaveRecord.getId());
+        if (record!=null){
+            throw new BusinessException(BusinessErrorCode.LEAVERECORD_IS_EXIST);
+        }
         leaveRecordMapper.updateByPrimaryKey(leaveRecord);
         return Boolean.TRUE;
     }

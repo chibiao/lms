@@ -70,13 +70,14 @@
             </div>
         </div>
         <!--添加-->
-        <form class="layui-form" method="post" id="addLeaveRecord" style="display: none">
+        <form class="layui-form" method="post" id="addLeaveRecord" style="display: none" lay-filter="addLeaveRecord">
             <div class="layui-form-item">
                 <label class="layui-form-label">请假标题</label>
                 <div class="layui-input-block">
                     <input type="text" name="leaveTitle" value="" lay-verify="required" autocomplete="off"
                            placeholder="请输入请假单标题" class="layui-input">
                     <input type="hidden" value="0" name="leaveStatus">
+                    <input type="hidden" value="" name="id">
                 </div>
             </div>
             <div class="layui-form-item">

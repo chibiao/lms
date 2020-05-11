@@ -36,7 +36,7 @@
       leave_reason = #{leaveReason,jdbcType=VARCHAR},
       leave_begin_time = #{leaveBeginTime,jdbcType=TIMESTAMP},
       leave_end_time = #{leaveEndTime,jdbcType=TIMESTAMP},
-      leave_days = #{leaveDays,jdbcType=INTEGER},
+      leave_days = #{leaveDays,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
     <update id="updateLeaveStatus">
@@ -99,8 +99,13 @@
         select id,student_id, student_name, leave_title, leave_reason,leave_status, leave_begin_time, leave_end_time,
         leave_days, specialty_no, dept_no, clazz_no
         from leave_record
-        where student_id=#{studentId}
-        and ((#{leaveBeginTime} &gt;= leave_begin_time and #{leaveBeginTime} &lt;= leave_end_time) or (#{leaveEndTime} &gt;= leave_begin_time and #{leaveEndTime} &lt;= leave_end_time))
-        limit 1
+        <where>
+            student_id=#{studentId}
+            and ((#{leaveBeginTime} &gt;= leave_begin_time and #{leaveBeginTime} &lt;= leave_end_time) or (#{leaveEndTime} &gt;= leave_begin_time and #{leaveEndTime} &lt;= leave_end_time))
+            <if test="id!=null">
+                and id &lt;&gt; #{id}
+            </if>
+            limit 1
+        </where>
     </select>
 </mapper>

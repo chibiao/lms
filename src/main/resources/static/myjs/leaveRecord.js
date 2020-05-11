@@ -64,6 +64,7 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
     table.on('toolbar(leaveRecord)', function (obj) {
         switch(obj.event){
             case 'add':
+                $("#addLeaveRecord")[0].reset();
                 addLeaveRecord=layer.open({
                     type: 1,
                     content: $("#addLeaveRecord"), //这里content是一个普通的String
@@ -72,42 +73,49 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                 break;
         }
     });
-    //监听提交
-    form.on('submit(add)', function(data) {
-        $.ajax({
-            data:data.field,
-            type:"post",
-            url:"/leaveRecord/addLeaveRecord",
-            dataType:"json",
-            success:function (result) {
-                if(result.code == "0000"){
-                    if (result.data){
-                        layer.msg("添加成功");
-                        //关闭当前frame
-                        layer.close(addLeaveRecord);
-                        table.reload('leaveRecord_datagrid');
-                    } else {
-                        layer.msg(result.message);
-                    }
-                }else {
-                    layer.msg(result.message);
-                }
-            }
-        });
-        return false;
-    });
     //列表操作
     table.on('tool(leaveRecord)', function(obj){
         var data = obj.data;
+        var id = obj.data.id;
         switch(obj.event){
             case 'edit':
-                addLeaveRecord=layer.open({
+                //表单初始赋值
+                form.val('addLeaveRecord', {
+                    "id": data.id ,// "name": "value"
+                    "leaveTitle": data.leaveTitle,
+                    "leaveStatus": data.leaveStatus,
+                    "leaveDays": data.leaveDays,
+                    "leaveBeginTime": data.leaveBeginTime,
+                    "leaveReason": data.leaveReason
+                });
+                updateLeaveRecord=layer.open({
                     type: 1,
                     content: $("#addLeaveRecord"), //这里content是一个普通的String
                     area: ['700px', '400px']
                 });
                 break;
             case 'del':
+                layer.confirm('确定删【'+data.leaveTitle+'】请假单吗？',{icon:3, title:'提示信息'},function(index){
+                    $.ajax({
+                        data:{
+                            _method:'DELETE'
+                        },
+                        type:"post",
+                        url:"/leaveRecord/deleteLeaveRecord/"+id,
+                        dataType:"json",
+                        success:function (result) {
+                            if(result.data){
+                                layer.msg("提交成功");
+                                //刷新table
+                                tableIns.reload();
+                                //关闭提示框
+                                layer.close(index);
+                            }else{
+                                layer.msg(result.message);
+                            }
+                        }
+                    });
+                });
                 break;
             case 'startProcess':
                 layer.confirm('确定要提交【'+data.leaveTitle+'】请假单吗？',{icon:3, title:'提示信息'},function(index){
@@ -131,25 +139,57 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                 });
                 break;
         }
+    });
 
-        if(layEvent === 'edit'){ //编辑
-            updateLeaveBill(data);//data主当前点击的行
-        }else if(layEvent === 'del'){ //删除
-            layer.confirm('确定删【'+data.title+'】请假单吗？',{icon:3, title:'提示信息'},function(index){
-                $.post("${ctx}/leaveBill/deleteLeaveBill.action",{
-                    id : data.id  //将需要删除的id作为参数传入
-                },function(data){
-                    //刷新table
-                    tableIns.reload();
-                    //关闭提示框
-                    layer.close(index);
-                })
+    //监听提交
+    form.on('submit(add)', function(data) {
+        var id = data.field.id;
+        if (id!=null && id!=''){
+            // 修改
+            $.ajax({
+                data:data.field,
+                type:"put",
+                url:"/leaveRecord/updateLeaveRecord",
+                dataType:"json",
+                success:function (result) {
+                    if(result.code == "0000"){
+                        if (result.data){
+                            layer.msg("修改成功");
+                            //关闭当前frame
+                            layer.close(updateLeaveRecord);
+                            table.reload('leaveRecord_datagrid');
+                        } else {
+                            layer.msg(result.message);
+                        }
+                    }else {
+                        layer.msg(result.message);
+                    }
+                }
             });
-        }else if(layEvent==="startProcess"){
-            startProcess(data);//请假单的对象
-        }else if(layEvent==='viewSpProcess'){
-            viewSpProcess(data);
+        } else {
+            // 添加
+            $.ajax({
+                data:data.field,
+                type:"post",
+                url:"/leaveRecord/addLeaveRecord",
+                dataType:"json",
+                success:function (result) {
+                    if(result.code == "0000"){
+                        if (result.data){
+                            layer.msg("添加成功");
+                            //关闭当前frame
+                            layer.close(addLeaveRecord);
+                            table.reload('leaveRecord_datagrid');
+                        } else {
+                            layer.msg(result.message);
+                        }
+                    }else {
+                        layer.msg(result.message);
+                    }
+                }
+            });
         }
+        return false;
     });
 
     //点击搜索条件

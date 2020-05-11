@@ -38,5 +38,5 @@ public interface LeaveRecordMapper {
      * @param leaveEndTime
      * @return
      */
-    LeaveRecord selectLeaveRecordByStudentIdAndLeaveBeginTime(@Param("studentId") Long studentId, @Param("leaveBeginTime") Date leaveBeginTime,@Param("leaveEndTime") Date leaveEndTime);
+    LeaveRecord selectLeaveRecordByStudentIdAndLeaveBeginTime(@Param("studentId") Long studentId, @Param("leaveBeginTime") Date leaveBeginTime,@Param("leaveEndTime") Date leaveEndTime,@Param("id") Long id);
 }
