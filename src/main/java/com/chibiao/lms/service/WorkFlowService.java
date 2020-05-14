@@ -3,6 +3,7 @@ package com.chibiao.lms.service;
 import com.chibiao.lms.domain.LeaveRecord;
 import com.chibiao.lms.domain.WorkFlowVo;
 import com.chibiao.lms.result.PageListRes;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 
 import java.io.InputStream;
@@ -39,4 +40,11 @@ public interface WorkFlowService {
     PageListRes querydCommentByLeaveRecordId(Long id);
 
     List<String> queryOutComeByTaskId(String taskId);
+
+    /**
+     * 查询办理人的历史任务信息
+     * @param assignee
+     * @return
+     */
+    PageListRes queryHistoryTask(WorkFlowVo workFlowVo,String assignee);
 }

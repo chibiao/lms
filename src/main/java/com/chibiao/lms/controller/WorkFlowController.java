@@ -2,6 +2,8 @@ package com.chibiao.lms.controller;
 
 import com.chibiao.lms.annotation.Log;
 import com.chibiao.lms.domain.LeaveRecord;
+import com.chibiao.lms.domain.Student;
+import com.chibiao.lms.domain.Teacher;
 import com.chibiao.lms.domain.WorkFlowVo;
 import com.chibiao.lms.error.BusinessErrorCode;
 import com.chibiao.lms.result.HttpResult;
@@ -10,6 +12,7 @@ import com.chibiao.lms.service.LeaveRecordService;
 import com.chibiao.lms.service.WorkFlowService;
 import com.chibiao.lms.util.HttpResultUtil;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -139,40 +142,26 @@ public class WorkFlowController {
         return HttpResultUtil.buildSuccessHttpResult(Boolean.TRUE);
     }
 
-    /*
-     *//**
-     * 根据任务ID查看流程进度图
-     *//*
-	@RequestMapping("toViewProcessByTaskId")
-	public String toViewProcessByTaskId(WorkFlowVo workFlowVo, Model model) {
-		ProcessDefinition processDefinition=this.workFlowService.queryProcessDefinitionByTaskId(workFlowVo.getTaskId());
-		//取出流程部署ID
-		String deploymentId = processDefinition.getDeploymentId();
-		workFlowVo.setDeploymentId(deploymentId);
-		//根据任务ID查询节点坐标
-		Map<String,Object> coordinate=this.workFlowService.queryTaskCoordinateByTaskId(workFlowVo.getTaskId());
-		model.addAttribute("c", coordinate);
-		return "sys/workFlow/viewProcessImage";
-	}
-	
-	
-	*//**
-     * 根据请假单ID查询审批批注信息和请假单的信息
-     *//*
-	@RequestMapping("viewSpProcess")
-	public String viewSpProcess(WorkFlowVo workFlowVo, Model model) {
-		//查询请假单的信息
-		LeaveBill leaveBill = leaveBillService.queryLeaveBillById(workFlowVo.getId());
-		model.addAttribute("leaveBill", leaveBill);
-		return "sys/workFlow/spProcessView";
-	}
-	
-	*//**
-     * 根据请假单的ID查询批注信息
-     *//*
-	@RequestMapping("loadCommentByLeaveBillId")
-	@ResponseBody
-	public PageListRes loadCommentByLeaveBillId(WorkFlowVo workFlowVo) {
-		return this.workFlowService.querydCommentByLeaveBillId(workFlowVo.getId());
-	}*/
+
+    @RequestMapping("/loadCommentByLeaveRecordId")
+    @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.WorkFlowController.loadCommentByLeaveRecordId",errorReturnHttpResult = false)
+    public PageListRes loadCommentByLeaveRecordId(WorkFlowVo workFlowVo) {
+        return this.workFlowService.querydCommentByLeaveRecordId(workFlowVo.getId());
+    }
+
+    @GetMapping("/queryHistoryTask")
+    @ResponseBody
+    public PageListRes queryHistoryTask(WorkFlowVo workFlowVo){
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        String assignee = null;
+        if (principal instanceof Teacher){
+            assignee = ((Teacher) principal).getTeacherName();
+        }
+        if (principal instanceof Student){
+            assignee = ((Student) principal).getStudentName();
+        }
+        return this.workFlowService.queryHistoryTask(workFlowVo,assignee);
+    }
+
 }

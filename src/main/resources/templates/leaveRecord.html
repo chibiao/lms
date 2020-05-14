@@ -105,6 +105,37 @@
                 <button type="reset" class="layui-btn layui-btn-warm">重置</button>
             </div>
         </form>
+        <!--添加-->
+        <form class="layui-form" method="post" id="seeLeaveRecord" style="display: none" lay-filter="seeLeaveRecord">
+            <div class="layui-form-item">
+                <label class="layui-form-label">请假标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="leaveTitle" value="" lay-verify="required" autocomplete="off"
+                           placeholder="请输入请假单标题" class="layui-input" disabled>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">请假天数</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="leaveDays" disabled lay-verify="required|number" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">请假时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="leaveBeginTime" disabled autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">请假原因</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入请假单内容" disabled name="leaveReason" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <table id="commentList" lay-filter="commentList"></table>
+        </form>
     </body>
     <!--表格工具条-->
     <script type="text/html" id="tableToolBar">

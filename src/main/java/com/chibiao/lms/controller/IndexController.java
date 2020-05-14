@@ -77,5 +77,9 @@ public class IndexController {
     public String taskManager(){
         return "taskManage";
     }
+    @RequestMapping("/historyTask")
+    public String historyTask(){
+        return "historyTask";
+    }
 
 }

@@ -234,7 +234,21 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 		return names;
 	}
 
-	/**
+    @Override
+    public PageListRes queryHistoryTask(WorkFlowVo workFlowVo,String assignee) {
+        long count = historyService // 历史相关Service
+                .createHistoricTaskInstanceQuery() // 创建历史任务实例查询
+                .taskAssignee(assignee.toString()).count();
+        int firstResult = (workFlowVo.getPage() - 1) * workFlowVo.getLimit();
+        int maxResults = workFlowVo.getLimit();
+        List<HistoricTaskInstance> list = historyService // 历史相关Service
+                .createHistoricTaskInstanceQuery() // 创建历史任务实例查询
+                .taskAssignee(assignee.toString())
+                .listPage(firstResult, maxResults);
+        return PageListResUtil.buildSuccessCountListRes(count,list);
+    }
+
+    /**
 	 * 根据任务ID查询批注信息
 	 */
 	@Override
@@ -325,33 +339,6 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 				.processDefinitionId(processDefinitionId).singleResult();
 		return processDefinition;
 	}
-
-	/*@Override
-	public Map<String, Object> queryTaskCoordinateByTaskId(String taskId) {
-		Map<String, Object> coordinate = new HashMap<>();
-		// 1,根据任务ID查询任务实例
-		Task task = this.taskService.createTaskQuery().taskId(taskId).singleResult();
-		// 2,取出流程定义ID
-		String processDefinitionId = task.getProcessDefinitionId();
-		// 3,取出流程实例ID
-		String processInstanceId = task.getProcessInstanceId();
-		// 4,根据流程实例ID查询流程实例
-		ProcessInstance processInstance = this.runtimeService.createProcessInstanceQuery()
-				.processInstanceId(processInstanceId).singleResult();
-		// 5,根据流程定义ID查询流程定义的XML信息
-		ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) this.repositoryService
-				.getProcessDefinition(processDefinitionId);
-		// 6,从流程实例对象里面取出当前活动节点ID
-		String activityId = processInstance.getActivityId();// usertask1
-		// 7,使用活动ID取出xml和当前活动ID相关节点数据
-		ActivityImpl activityImpl = processDefinition.findActivity(activityId);
-		// 8,从activityImpl取出坐标信息
-		coordinate.put("x", activityImpl.getX());
-		coordinate.put("y", activityImpl.getY());
-		coordinate.put("width", activityImpl.getWidth());
-		coordinate.put("height", activityImpl.getHeight());
-		return coordinate;
-	}*/
 
 	/**
 	 * Integer id请假单的ID

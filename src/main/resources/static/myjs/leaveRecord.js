@@ -138,6 +138,35 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                     })
                 });
                 break;
+            case 'viewSpProcess':
+                //表单初始赋值
+                form.val('seeLeaveRecord', {
+                    "id": data.id ,// "name": "value"
+                    "leaveTitle": data.leaveTitle,
+                    "leaveStatus": data.leaveStatus,
+                    "leaveDays": data.leaveDays,
+                    "leaveBeginTime": data.leaveBeginTime,
+                    "leaveReason": data.leaveReason
+                });
+                //待办任务列表
+                table.render({
+                    elem: '#commentList',
+                    url : '/workFlow/loadCommentByLeaveRecordId?id='+data.id,
+                    cellMinWidth : 95,
+                    height : "full-320",
+                    id : "commentListTable",
+                    cols : [[
+                        {field: 'time', title: '批注时间', minWidth:100, align:"center"},
+                        {field: 'userId', title: '批注人', minWidth:100, align:"center"},
+                        {field: 'message', title: '批注内容', minWidth:100, align:"center"}
+                    ]]
+                });
+                seeLeaveRecord=layer.open({
+                    type: 1,
+                    content: $("#seeLeaveRecord"), //这里content是一个普通的String
+                    area: ['700px', '400px']
+                });
+                break;
         }
     });
 
