@@ -5,6 +5,7 @@ import com.chibiao.lms.domain.Admin;
 import com.chibiao.lms.domain.Student;
 import com.chibiao.lms.domain.Teacher;
 import com.chibiao.lms.enums.LoginTypeEnum;
+import com.chibiao.lms.enums.TeacherTypeEnum;
 import com.chibiao.lms.service.AdminService;
 import com.chibiao.lms.service.StudentService;
 import com.chibiao.lms.service.TeacherService;
@@ -14,10 +15,14 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 请输入描述
@@ -42,7 +47,25 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        log.info("UserRealm -> doGetAuthorizationInfo start, principalCollection={}", principalCollection);
+        Object primaryPrincipal = principalCollection.getPrimaryPrincipal();
+        /*根据当前用户id,查询角色和权限*/
+        List<String> roles = new ArrayList<>();
+        if (primaryPrincipal instanceof Teacher){
+            if (TeacherTypeEnum.TEACHER.getType().equals(((Teacher) primaryPrincipal).getTeacherType())){
+                roles.add("教师");
+            }else {
+                roles.add("辅导员");
+            }
+        }else if(primaryPrincipal instanceof Student){
+            roles.add("学生");
+        }else {
+            roles.add("管理员");
+        }
+        /*给授权信息*/
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.addRoles(roles);
+        return info;
     }
 
     /**

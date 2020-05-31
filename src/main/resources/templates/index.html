@@ -1,5 +1,7 @@
 <!DOCTYPE HTML >
-<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
     <head>
         <meta charset="UTF-8">
         <title>唐院学生请假管理系统</title>
@@ -69,12 +71,14 @@
         <div class="left-nav">
             <div id="side-nav">
                 <ul id="nav">
+                    <shiro:hasAnyRoles name="管理员,辅导员,教师">
                     <li>
                         <a href="javascript:;">
                             <i class="iconfont left-nav-li" lay-tips="会员管理">&#xe6b8;</i>
                             <cite>信息管理</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
+                            <shiro:hasRole name="管理员">
                             <li>
                                 <a onclick="xadmin.add_tab('院系信息管理','/department')">
                                     <i class="iconfont">&#xe6a7;</i>
@@ -85,33 +89,40 @@
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>专业信息管理</cite></a>
                             </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('班级信息管理','/clazz',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>班级信息管理</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('课程信息管理','/course',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>课程信息管理</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('学生信息管理','/student')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>学生信息管理</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('教师信息管理','/teacher')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>教师信息管理</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('管理员信息管理','/admin')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>管理员信息管理</cite></a>
-                            </li>
+                            </shiro:hasRole>
+                            <shiro:hasAnyRoles name="管理员,辅导员,教师">
+                                <li>
+                                    <a onclick="xadmin.add_tab('班级信息管理','/clazz',true)">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>班级信息管理</cite></a>
+                                </li>
+                                <li>
+                                    <a onclick="xadmin.add_tab('课程信息管理','/course',true)">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>课程信息管理</cite></a>
+                                </li>
+                                <li>
+                                    <a onclick="xadmin.add_tab('学生信息管理','/student')">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>学生信息管理</cite></a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles name="管理员">
+                                <li>
+                                    <a onclick="xadmin.add_tab('教师信息管理','/teacher')">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>教师信息管理</cite></a>
+                                </li>
+                                <li>
+                                    <a onclick="xadmin.add_tab('管理员信息管理','/admin')">
+                                        <i class="iconfont">&#xe6a7;</i>
+                                        <cite>管理员信息管理</cite></a>
+                                </li>
+                            </shiro:hasAnyRoles>
                         </ul>
                     </li>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="辅导员,教师">
                     <li>
                         <a href="javascript:;">
                             <i class="iconfont left-nav-li" lay-tips="个人信息管理">&#xe723;</i>
@@ -135,6 +146,8 @@
                             </li>
                         </ul>
                     </li>
+                    </shiro:hasAnyRoles>
+                    <shiro:hasRole name="学生">
                     <li>
                         <a href="javascript:;">
                             <i class="iconfont left-nav-li" lay-tips="我的课程">&#xe723;</i>
@@ -148,6 +161,8 @@
                             </li>
                         </ul>
                     </li>
+                    </shiro:hasRole>
+                    <shiro:hasRole name="管理员">
                     <li>
                         <a href="javascript:;">
                             <i class="iconfont left-nav-li" lay-tips="流程管理">&#xe723;</i>
@@ -161,17 +176,21 @@
                             </li>
                         </ul>
                     </li>
+                    </shiro:hasRole>
+                    <shiro:hasAnyRoles name="学生,辅导员">
                     <li>
                         <a href="javascript:;">
                             <i class="iconfont left-nav-li" lay-tips="审批管理">&#xe723;</i>
                             <cite>审批管理</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
+                            <shiro:hasRole name="学生">
                             <li>
                                 <a onclick="xadmin.add_tab('我的请假单','/leaveRecord')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>我的请假单</cite></a>
                             </li>
+                            </shiro:hasRole>
                             <li>
                                 <a onclick="xadmin.add_tab('待办任务管理','/taskManage')">
                                     <i class="iconfont">&#xe6a7;</i>
@@ -184,6 +203,7 @@
                             </li>
                         </ul>
                     </li>
+                    </shiro:hasAnyRoles>
                 </ul>
             </div>
         </div>

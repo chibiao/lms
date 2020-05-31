@@ -1,5 +1,6 @@
 package com.chibiao.lms.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.chibiao.lms.realm.UserRealm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -46,6 +47,15 @@ public class ShiroConfig {
         DefaultWebSecurityManager defaultSecurityManager = new DefaultWebSecurityManager();
         defaultSecurityManager.setRealm(userRealm());
         return defaultSecurityManager;
+    }
+
+    /**
+     * 页面上使用shiro标签
+     * @return
+     */
+    @Bean(name = "shiroDialect")
+    public ShiroDialect shiroDialect(){
+        return new ShiroDialect();
     }
 
     @Bean
