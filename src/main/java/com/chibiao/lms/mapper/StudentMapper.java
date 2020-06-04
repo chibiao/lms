@@ -55,4 +55,11 @@ public interface StudentMapper {
      * @param list
      */
     void addStudentList(List<StudentData> list);
+
+    /**
+     * 更新学生账户密码
+     * @param studentId
+     * @param newPassword
+     */
+    void updateStudentPassword(@Param("studentId") Long studentId,@Param("newPassword") String newPassword);
 }

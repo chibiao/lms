@@ -28,7 +28,7 @@ layui.use(['form', 'layer','jquery','table'], function () {
                 addCourse=layer.open({
                     type: 1,
                     content: $("#addCourse"), //这里content是一个普通的String
-                    area: ['500px', '300px']
+                    area: ['500px', '500px']
                 });
                 break;
         }

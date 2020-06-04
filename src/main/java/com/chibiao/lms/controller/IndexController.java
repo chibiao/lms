@@ -81,5 +81,9 @@ public class IndexController {
     public String historyTask(){
         return "historyTask";
     }
+    @RequestMapping("/resetPassword")
+    public String resetPassword(){
+        return "resetPassword";
+    }
 
 }

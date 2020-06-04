@@ -30,6 +30,7 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                     return d.department.deptName;
                 }
             }
+            , {fixed: 'right', title: '操作',toolbar: '#bar',width:220}
         ]]
 
     });
@@ -38,12 +39,64 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
     table.on('toolbar(teacher)', function (obj) {
         switch(obj.event){
             case 'add':
+                $("#add").css("display","block");
+                $("#update").css("display","none");
+                $("#L_teacherNo").attr("disabled",false);
+                $("#L_teacherName").attr("disabled",false);
                 addTeacher=layer.open({
                     type: 1,
                     content: $("#addTeacher"), //这里content是一个普通的String
                     area: ['600px', '500px']
                 });
+                $('#addTeacher')[0].reset();
+                form.render();
                 break;
+        }
+    });
+    //监听行工具事件
+    table.on('tool(teacher)', function (obj) {
+        //获取每行的数据
+        var data = obj.data;
+        if (obj.event === 'del') {
+            layer.confirm('真的删除行么', function (index) {
+                var teacherNo=obj.data.teacherNo;
+                $.ajax({
+                    data:{
+                        _method:'DELETE'
+                    },
+                    type:"post",
+                    url:"/teacher/deleteTeacher/"+teacherNo,
+                    dataType:"json",
+                    success:function (result) {
+                        if(result.data){
+                            layer.msg("删除成功");
+                            table.reload('teacher_datagrid'); //只重载数据
+                        }else{
+                            layer.msg(result.message);
+                        }
+                    }
+                });
+            });
+        }else if (obj.event === 'update') {
+            updateTeacher=layer.open({
+                type: 1,
+                content: $("#addTeacher"), //这里content是一个普通的String
+                area: ['600px', '500px']
+            });
+            $("#L_teacherNo").attr("disabled",true);
+            $("#L_teacherName").attr("disabled",true);
+            $("#add").css("display","none");
+            $("#update").css("display","block");
+            form.val('addTeacher', {
+                "teacherNo": data.teacherNo,
+                "teacherName": data.teacherName,
+                "teacherEmail":data.teacherEmail,
+                "teacherPhone":data.teacherPhone,
+                "teacherSex":data.teacherSex,
+                "teacherType":data.teacherType,
+                "department.deptNo":data.department.deptNo
+            });
+            form.render();
         }
     });
 
@@ -106,6 +159,31 @@ layui.use(['form', 'layer','jquery','table','laydate'], function () {
                         layer.msg("添加成功");
                         //关闭当前frame
                         layer.close(addTeacher);
+                        table.reload('teacher_datagrid');
+                    } else {
+                        layer.msg(result.message);
+                    }
+                }else {
+                    layer.msg(result.message);
+                }
+            }
+        });
+        return false;
+    });
+
+    //监听提交
+    form.on('submit(update)', function(data) {
+        $.ajax({
+            data:data.field,
+            type:"put",
+            url:"/teacher/updateTeacher",
+            dataType:"json",
+            success:function (result) {
+                if(result.code == "0000"){
+                    if (result.data){
+                        layer.msg("修改成功");
+                        //关闭当前frame
+                        layer.close(updateTeacher);
                         table.reload('teacher_datagrid');
                     } else {
                         layer.msg(result.message);

@@ -64,6 +64,11 @@
         set student_password =#{initStudentPassword}
         where student_id=#{studentId}
     </update>
+    <update id="updateStudentPassword">
+        update student
+        set student_password =#{newPassword}
+        where student_id=#{studentId}
+    </update>
 
     <select id="queryStudents" resultMap="BaseResultMap">
     select student_id, student_name, student_password, student_phone, student_email,

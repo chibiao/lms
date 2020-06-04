@@ -35,11 +35,11 @@
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.chibiao.lms.domain.Teacher" >
     update teacher
-    set teacher_name = #{teacherName,jdbcType=VARCHAR},
-      teacher_password = #{teacherPassword,jdbcType=VARCHAR},
+    set
       teacher_email = #{teacherEmail,jdbcType=VARCHAR},
       teacher_phone = #{teacherPhone,jdbcType=VARCHAR},
-      teacher_type = #{teacherType,jdbcType=INTEGER}
+      teacher_type = #{teacherType,jdbcType=INTEGER},
+      teacher_sex = #{teacherSex}
     where teacher_no = #{teacherNo,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

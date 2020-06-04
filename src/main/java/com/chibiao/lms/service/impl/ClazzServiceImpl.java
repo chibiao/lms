@@ -71,7 +71,8 @@ public class ClazzServiceImpl implements ClazzService {
 
     @Override
     public List<Clazz> clazzBySpecialtyNo(Long specialtyNo) {
-        try {
+        return clazzMapper.selectBySpecialtyNo(specialtyNo);
+        /*try {
             // 从缓存中查找
             String allDepartmentJson = redisClient.get(RedisPrefixEnum.clazzPrefix + "list" + specialtyNo);
             if (!StringUtils.isEmpty(allDepartmentJson)) {
@@ -85,8 +86,8 @@ public class ClazzServiceImpl implements ClazzService {
             }
             return clazzes;
         }catch (Throwable e){
-            return clazzMapper.selectBySpecialtyNo(specialtyNo);
-        }
+
+        }*/
     }
 
     @Override

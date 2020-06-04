@@ -111,6 +111,17 @@ public class StudentServiceImpl implements StudentService {
         return null;
     }
 
+    @Override
+    public Boolean updateStudentPassword(Student student, String oldPassword, String newPassword) {
+        Student student1 = studentMapper.selectByStudentId(student.getStudentId());
+        if (!student1.getStudentPassword().equals(oldPassword)){
+            throw new BusinessException(BusinessErrorCode.PASSWORD_FALSE);
+        }else {
+            studentMapper.updateStudentPassword(student.getStudentId(),newPassword);
+        }
+        return Boolean.TRUE;
+    }
+
     private void checkClazz(Student student) {
         // 查询班级是否存在
         Clazz clazz = clazzMapper.selectByClazzNo(student.getClazz().getClazzNo());

@@ -2,13 +2,16 @@ package com.chibiao.lms.controller;
 
 import com.chibiao.lms.annotation.Log;
 import com.chibiao.lms.authc.UserNamePasswordLoginTypeToken;
+import com.chibiao.lms.domain.Student;
 import com.chibiao.lms.error.BusinessErrorCode;
 import com.chibiao.lms.result.HttpResult;
+import com.chibiao.lms.service.StudentService;
 import com.chibiao.lms.util.HttpResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Slf4j
 public class LoginController {
+    @Autowired
+    private StudentService studentService;
     @GetMapping("/login")
     public String defaultLogin(){
         return "login";
@@ -49,5 +54,14 @@ public class LoginController {
             return HttpResultUtil.buildHttpResult(BusinessErrorCode.ACCOUNT_OR_PASSWORD_FALSE);
         }
         return HttpResultUtil.buildSuccessHttpResult(Boolean.TRUE);
+    }
+
+    @PostMapping("/updatePassword")
+    @ResponseBody
+    @Log(jKey = "com.chibiao.lms.controller.StudentController.updateStudentPassword")
+    public HttpResult<Boolean> updateStudentPassword(String oldPassword,String newPassword){
+        Student student = (Student) SecurityUtils.getSubject().getPrincipal();
+        Boolean result = studentService.updateStudentPassword(student,oldPassword,newPassword);
+        return HttpResultUtil.buildSuccessHttpResult(result);
     }
 }

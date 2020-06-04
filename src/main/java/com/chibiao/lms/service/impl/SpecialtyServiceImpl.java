@@ -61,7 +61,9 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 
     @Override
     public List<Specialty> specialtyByDeptNo(Long detpNo) {
-        try {
+        return specialtyMapper.querySpecialtyByDeptNo(detpNo);
+
+        /*try {
             // 从缓存中查找
             String allDepartmentJson = redisClient.get(RedisPrefixEnum.specialtyPrefix + "list" + detpNo);
             if (!StringUtils.isEmpty(allDepartmentJson)) {
@@ -75,8 +77,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
             }
             return specialties;
         }catch (Throwable e){
-            return specialtyMapper.querySpecialtyByDeptNo(detpNo);
-        }
+        }*/
     }
 
 }

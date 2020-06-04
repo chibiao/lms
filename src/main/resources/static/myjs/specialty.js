@@ -28,7 +28,7 @@ layui.use(['form', 'layer','jquery','table'], function () {
                 addSpecialty=layer.open({
                     type: 1,
                     content: $("#addSpecialty"), //这里content是一个普通的String
-                    area: ['500px', '400px']
+                    area: ['500px', '500px']
                 });
                 break;
         }

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
     <head>
         <meta charset="UTF-8">
         <title>欢迎页面-X-admin2.2</title>
@@ -77,10 +79,14 @@
                     </div>
                 </div>
                 <div class="layui-form-item" style="text-align: center;">
-                    <input type="button" value="同意"  class="layui-btn dotask" />
-                    <input type="button" value="驳回"  class="layui-btn dotask" />
-                    <input type="button" value="提交"  class="layui-btn dotask" />
-                    <input type="button" value="放弃"  class="layui-btn dotask" />
+                    <shiro:hasRole name="学生">
+                        <input type="button" value="提交"  class="layui-btn dotask" />
+                        <input type="button" value="放弃"  class="layui-btn dotask" />
+                    </shiro:hasRole>
+                    <shiro:hasRole name="辅导员">
+                        <input type="button" value="同意"  class="layui-btn dotask" />
+                        <input type="button" value="驳回"  class="layui-btn dotask" />
+                    </shiro:hasRole>
                 </div>
                 <table id="commentList" lay-filter="commentList"></table>
             </form>

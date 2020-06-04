@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
     <head>
         <meta charset="UTF-8">
         <title>欢迎页面-X-admin2.2</title>
@@ -208,7 +210,9 @@
     <script type="text/html" id="bar">
         <a type="button" class="layui-btn layui-btn-warm layui-btn-xs" lay-event="update">修改</a>
         <a type="button" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-        <a type="button" class="layui-btn layui-btn-primary layui-btn-xs" lay-event="reset">重置密码</a>
+        <shiro:hasAnyRoles name="管理员,辅导员">
+            <a type="button" class="layui-btn layui-btn-primary layui-btn-xs" lay-event="reset">重置密码</a>
+        </shiro:hasAnyRoles>
     </script>
     <!--性别选择按钮-->
     <script type="text/html" id="sexSwitch">

@@ -86,7 +86,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> allDepartment() {
-        try {
+        return departmentMapper.queryDepartment();
+        /*try {
             // 从缓存中查找
             String allDepartmentJson = redisClient.get(RedisPrefixEnum.departmentPrefix + "list");
             if (!StringUtils.isEmpty(allDepartmentJson)){
@@ -99,7 +100,6 @@ public class DepartmentServiceImpl implements DepartmentService {
             return departments;
         }catch (Throwable e){
             // 数据库查找
-            return departmentMapper.queryDepartment();
-        }
+        }*/
     }
 }

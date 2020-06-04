@@ -70,4 +70,13 @@ public interface StudentService {
      * @return
      */
     Boolean sendReminderMail(Long leaveRecordId);
+
+    /**
+     * 修改学生密码
+     * @param student
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    Boolean updateStudentPassword(Student student, String oldPassword, String newPassword);
 }

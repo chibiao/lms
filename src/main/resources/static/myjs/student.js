@@ -37,7 +37,7 @@ layui.use(['form', 'layer','jquery','table','laydate','upload'], function () {
                 addStudent=layer.open({
                     type: 1,
                     content: $("#addStudent"), //这里content是一个普通的String
-                    area: ['1000px', '400px']
+                    area: ['1000px', '500px']
                 });
                 $("#add").css("display","block");
                 $("#update").css("display","none");
@@ -46,6 +46,8 @@ layui.use(['form', 'layer','jquery','table','laydate','upload'], function () {
                 $("#L_specialtyNo").append("<option value=''></option>");
                 $("#L_clazzNo").append("<option value=''></option>");
                 $("#L_studentId").removeAttr("disabled");
+                $('#addStudent')[0].reset();
+                form.render();
                 break;
             case 'downloadTml':
                 addStudent=layer.open({
@@ -130,7 +132,7 @@ layui.use(['form', 'layer','jquery','table','laydate','upload'], function () {
             updateStudent=layer.open({
                 type: 1,
                 content: $("#addStudent"), //这里content是一个普通的String
-                area: ['1000px', '400px']
+                area: ['1000px', '500px']
             });
             $("#add").css("display","none");
             $("#update").css("display","block");

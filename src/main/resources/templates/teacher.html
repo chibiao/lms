@@ -62,7 +62,7 @@
             </div>
         </div>
         <!--添加教师的弹窗-->
-        <form class="layui-form" id="addTeacher" style="display: none" method="post">
+        <form class="layui-form" id="addTeacher" style="display: none" method="post" lay-filter="addTeacher">
             <div class="layui-form-item">
                 <label for="L_teacherNo" class="layui-form-label">
                     <span class="x-red">*</span>教师编号</label>
@@ -126,7 +126,8 @@
             </div>
             <div class="layui-form-item">
                 <label for="L_deptNo" class="layui-form-label"></label>
-                <button class="layui-btn" lay-filter="add" lay-submit="">增加</button>
+                <button class="layui-btn" lay-filter="add" lay-submit="" id="add">增加</button>
+                <button class="layui-btn" lay-filter="update" lay-submit="" style="display: none" id="update">修改</button>
             </div>
         </form>
     </body>
@@ -136,6 +137,7 @@
     </script>
     <!--表格操作栏-->
     <script type="text/html" id="bar">
+        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="update">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
     <script>var _hmt = _hmt || []; (function() {
